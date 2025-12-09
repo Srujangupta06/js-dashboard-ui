@@ -24,18 +24,25 @@ import {
     LogOut,
     ChevronLeft,
     ChevronRight,
+    File,
+    Users,
+    Star,
+    Send,
+    Building,
 } from 'lucide-react';
-
+import logo from '../assets/logo.png';
 const menuItems = [
     { text: 'Dashboard', icon: Home },
     { text: 'Job Search', icon: Search },
-    { text: 'Applications', icon: FileText },
-    { text: 'Saved Jobs', icon: Bookmark },
-    { text: 'Interviews', icon: Calendar },
-    { text: 'Messages', icon: MessageSquare },
+    { text: 'Resumes', icon: FileText },
+    { text: 'Files', icon: File },
+    { text: 'Network', icon: Users },
+    { text: 'Shortlisted', icon: Star },
+    { text: 'Saved', icon: Bookmark },
+    { text: 'Applied', icon: Send },
+    { text: 'Companies', icon: Building },
     { text: 'Profile', icon: User },
     { text: 'Settings', icon: Settings },
-    { text: 'Help', icon: HelpCircle },
 ];
 
 const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded, toggleSidebar }) => {
@@ -44,7 +51,7 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded, toggleSidebar }) =
             {/* Sidebar Header */}
             <Box
                 sx={{
-                    p: 3,
+                    p: '12px 24px',
                     borderBottom: '1px solid #e9ecef',
                     display: 'flex',
                     alignItems: 'center',
@@ -52,38 +59,9 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded, toggleSidebar }) =
                     gap: 2,
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Box
-                        sx={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: '10px',
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontWeight: 700,
-                            fontSize: '20px',
-                            color: 'white',
-                            boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
-                        }}
-                    >
-                        J
-                    </Box>
                     {isExpanded && (
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontWeight: 700,
-                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                            }}
-                        >
-                            JobSeeker
-                        </Typography>
+                        <Box component={'img'} src={logo} sx={{ width: '100%', height: '100%', maxWidth: '120px', maxHeight: '100px' }} />
                     )}
-                </Box>
                 <IconButton
                     onClick={toggleSidebar}
                     sx={{

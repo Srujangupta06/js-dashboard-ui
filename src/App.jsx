@@ -35,7 +35,7 @@ import ActivityHeatmap from './components/ActivityHeatmap';
 import RecommendedJobs from './components/RecommendedJobs';
 import MobileBottomNav from './components/MobileBottomNav';
 import NotificationDrawer from './components/NotificationDrawer';
-
+import logo from './assets/logo.png'
 // Data
 import {
   stats,
@@ -126,79 +126,68 @@ const App = () => {
             borderBottom: '1px solid #e9ecef',
           }}
         >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, color: '#1a1a2e' }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                flexGrow: 1,
-                fontWeight: 700,
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              JobSeeker
-            </Typography>
-            <IconButton sx={{ color: '#1a1a2e' }} onClick={handleNotificationOpen}>
-              <Badge badgeContent={notifications} color="error">
-                <Bell size={20} />
-              </Badge>
-            </IconButton>
-            <IconButton
-              sx={{ color: '#1a1a2e', ml: 0.5 }}
-              onClick={handleMoreMenuOpen}
-            >
-              <Avatar
+          <Toolbar sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}>
+            <Box component={'img'} src={logo} sx={{ width: '100%', height: '100%', maxWidth: '120px', maxHeight: '100px' }} />
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <IconButton sx={{
+                color: '#6c757d',
+                width: 44,
+                height: 44,
+                '&:hover': { background: 'rgba(102, 126, 234, 0.1)', color: '#667eea' },
+              }} onClick={handleNotificationOpen}>
+                <Badge badgeContent={notifications} color="error">
+                  <Bell size={20} />
+                </Badge>
+              </IconButton>
+              <IconButton
+                sx={{ color: '#1a1a2e', ml: 0.5 }}
+                onClick={handleMoreMenuOpen}
+              >
+                <Avatar
+                  sx={{
+                    width: 32,
+                    height: 32,
+                    background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                    fontSize: '14px',
+                  }}
+                >
+                  JD
+                </Avatar>
+              </IconButton>
+              <Menu
+                anchorEl={moreMenuAnchor}
+                open={Boolean(moreMenuAnchor)}
+                onClose={handleMoreMenuClose}
                 sx={{
-                  width: 32,
-                  height: 32,
-                  background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
-                  fontSize: '14px',
+                  '& .MuiPaper-root': {
+                    borderRadius: '12px',
+                    mt: 1,
+                    minWidth: 180,
+                  },
                 }}
               >
-                JD
-              </Avatar>
-            </IconButton>
-            <Menu
-              anchorEl={moreMenuAnchor}
-              open={Boolean(moreMenuAnchor)}
-              onClose={handleMoreMenuClose}
-              sx={{
-                '& .MuiPaper-root': {
-                  borderRadius: '12px',
-                  mt: 1,
-                  minWidth: 180,
-                },
-              }}
-            >
-              <MenuItem onClick={() => handleMoreMenuItemClick('Saved Jobs')}>
-                <Bookmark size={18} style={{ marginRight: 12 }} />
-                Saved Jobs
-              </MenuItem>
-              <MenuItem onClick={() => handleMoreMenuItemClick('Messages')}>
-                <MessageSquare size={18} style={{ marginRight: 12 }} />
-                Messages
-              </MenuItem>
-              <MenuItem onClick={() => handleMoreMenuItemClick('Settings')}>
-                <Settings size={18} style={{ marginRight: 12 }} />
-                Settings
-              </MenuItem>
-              <MenuItem onClick={() => handleMoreMenuItemClick('Help')}>
-                <HelpCircle size={18} style={{ marginRight: 12 }} />
-                Help
-              </MenuItem>
-            </Menu>
+                <MenuItem onClick={() => handleMoreMenuItemClick('Saved Jobs')}>
+                  <Bookmark size={18} style={{ marginRight: 12 }} />
+                  Saved Jobs
+                </MenuItem>
+                <MenuItem onClick={() => handleMoreMenuItemClick('Messages')}>
+                  <MessageSquare size={18} style={{ marginRight: 12 }} />
+                  Messages
+                </MenuItem>
+                <MenuItem onClick={() => handleMoreMenuItemClick('Settings')}>
+                  <Settings size={18} style={{ marginRight: 12 }} />
+                  Settings
+                </MenuItem>
+                <MenuItem onClick={() => handleMoreMenuItemClick('Help')}>
+                  <HelpCircle size={18} style={{ marginRight: 12 }} />
+                  Help
+                </MenuItem>
+              </Menu>
+            </Box>
           </Toolbar>
         </AppBar>
       )}
@@ -276,9 +265,9 @@ const App = () => {
                 py: 2.5,
               }}
             >
-              <Typography variant="h5" sx={{ fontWeight: 700, color: '#1a1a2e' }}>
+              {/* <Typography variant="h5" sx={{ fontWeight: 700, color: '#1a1a2e' }}>
                 {selectedMenu}
-              </Typography>
+              </Typography> */}
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                 <IconButton
                   sx={{
@@ -314,229 +303,15 @@ const App = () => {
         <Box sx={{ p: { xs: 2.5, md: 4 }, mt: { xs: 8, md: 0 }, pb: { xs: 10, md: 4 } }}>
           {/* Welcome Section */}
           <Box sx={{ mb: 3 }}>
-            <Typography variant="h4" sx={{ fontWeight: 700, color: '#1a1a2e', mb: 1 }}>
+            <Typography sx={{ fontWeight: 700, color: '#1a1a2e', mb: 1, fontSize: 'clamp(1.5rem, 2vw, 2rem)' }}>
               Welcome back, John! 👋
             </Typography>
-            <Typography variant="body1" sx={{ color: '#6c757d', fontWeight: 500 }}>
+            <Typography variant="body1" sx={{ color: '#6c757d', fontWeight: 500, fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}>
               Here's what's happening with your job search today.
             </Typography>
           </Box>
 
-          {/* Tabs Navigation */}
-          <Box sx={{ mb: 3 }}>
-            <Tabs
-              value={currentTab}
-              onChange={handleTabChange}
-              sx={{
-                '& .MuiTabs-indicator': {
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  height: 3,
-                },
-                '& .MuiTab-root': {
-                  textTransform: 'none',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  color: '#6c757d',
-                  minHeight: 48,
-                  '&.Mui-selected': {
-                    color: '#667eea',
-                  },
-                },
-              }}
-            >
-              <Tab label="Account Summary" />
-              <Tab label="Current Job Offers" />
-              <Tab label="Navigate Job Opportunities" />
-              <Tab label="How You Match" />
-              <Tab label="Profile Completed" />
-            </Tabs>
-          </Box>
 
-          {/* Tab 0: Account Summary */}
-          <TabPanel value={currentTab} index={0}>
-            {/* Stats Grid - Full Width */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-              {stats.map((stat, index) => (
-                <Grid item xs={12} sm={6} md={4} xl={3} key={index}>
-                  <StatCard stat={stat} />
-                </Grid>
-              ))}
-            </Grid>
-
-            {/* Activity Heatmap - Full Width */}
-            {/* <Box sx={{ mb: 4 }}>
-              <ActivityHeatmap />
-            </Box> */}
-
-            {/* Recommended Jobs - Full Width */}
-            <Box sx={{ mb: 4 }}>
-              <RecommendedJobs userRole="Product Manager" />
-            </Box>
-
-            {/* Application Status - Full Width */}
-            <Box sx={{ mb: 4 }}>
-              <ApplicationStatus applicationStatus={applicationStatus} />
-            </Box>
-          </TabPanel>
-
-          {/* Tab 1: Current Job Offers */}
-          <TabPanel value={currentTab} index={1}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Card
-                  sx={{
-                    background: '#ffffff',
-                    border: '1px solid #e9ecef',
-                    borderRadius: '16px',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-                  }}
-                >
-                  <CardContent sx={{ p: 3 }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Briefcase size={24} color="#667eea" />
-                        <Typography variant="h6" sx={{ fontWeight: 600, color: '#1a1a2e' }}>
-                          All Job Offers
-                        </Typography>
-                      </Box>
-                      <Button
-                        endIcon={<ArrowUpRight size={16} />}
-                        sx={{
-                          color: '#667eea',
-                          textTransform: 'none',
-                          fontWeight: 600,
-                          '&:hover': { background: 'rgba(102, 126, 234, 0.08)' },
-                        }}
-                      >
-                        View All
-                      </Button>
-                    </Box>
-                    {jobLocations.map((job) => (
-                      <JobCard key={job.id} job={job} />
-                    ))}
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </TabPanel>
-
-          {/* Tab 2: Navigate Job Opportunities */}
-          <TabPanel value={currentTab} index={2}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <JobMap jobLocations={jobLocations} />
-              </Grid>
-              <Grid item xs={12}>
-                <Card
-                  sx={{
-                    background: '#ffffff',
-                    border: '1px solid #e9ecef',
-                    borderRadius: '16px',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-                  }}
-                >
-                  <CardContent sx={{ p: 3 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600, color: '#1a1a2e', mb: 3 }}>
-                      Jobs by Location
-                    </Typography>
-                    {jobLocations.map((job) => (
-                      <JobCard key={job.id} job={job} />
-                    ))}
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </TabPanel>
-
-          {/* Tab 3: How You Match */}
-          <TabPanel value={currentTab} index={3}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <SkillsProgress skills={skillsProgress} />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <ProfileStrength />
-              </Grid>
-              <Grid item xs={12}>
-                <ApplicationStatus applicationStatus={applicationStatus} />
-              </Grid>
-            </Grid>
-          </TabPanel>
-
-          {/* Tab 4: Profile Completed */}
-          <TabPanel value={currentTab} index={4}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <ProfileStrength />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Card
-                  sx={{
-                    background: '#ffffff',
-                    border: '1px solid #e9ecef',
-                    borderRadius: '16px',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-                  }}
-                >
-                  <CardContent sx={{ p: 3 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600, color: '#1a1a2e', mb: 3 }}>
-                      Profile Completion Tips
-                    </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                      <Box
-                        sx={{
-                          p: 2.5,
-                          borderRadius: '12px',
-                          background: 'rgba(102, 126, 234, 0.05)',
-                          border: '1px solid rgba(102, 126, 234, 0.15)',
-                        }}
-                      >
-                        <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1a2e', mb: 1 }}>
-                          📝 Complete Your Resume
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#6c757d' }}>
-                          Upload your latest resume to increase your chances of getting noticed by recruiters.
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          p: 2.5,
-                          borderRadius: '12px',
-                          background: 'rgba(102, 126, 234, 0.05)',
-                          border: '1px solid rgba(102, 126, 234, 0.15)',
-                        }}
-                      >
-                        <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1a2e', mb: 1 }}>
-                          💼 Add Portfolio Projects
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#6c757d' }}>
-                          Showcase your best work by adding portfolio projects with descriptions and links.
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          p: 2.5,
-                          borderRadius: '12px',
-                          background: 'rgba(102, 126, 234, 0.05)',
-                          border: '1px solid rgba(102, 126, 234, 0.15)',
-                        }}
-                      >
-                        <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1a1a2e', mb: 1 }}>
-                          🎯 Update Your Skills
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#6c757d' }}>
-                          Keep your skills section up-to-date with your latest technical expertise.
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={12}>
-                <SkillsProgress skills={skillsProgress} />
-              </Grid>
-            </Grid>
-          </TabPanel>
         </Box>
       </Box>
 
