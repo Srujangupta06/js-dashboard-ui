@@ -24,7 +24,7 @@ const NotificationDrawer = ({ open, onClose }) => {
             message: 'Google viewed your application for Senior Product Manager',
             time: '5 min ago',
             icon: Briefcase,
-            color: '#667eea',
+            color: '#ea590c',
             unread: true,
         },
         {
@@ -107,7 +107,7 @@ const NotificationDrawer = ({ open, onClose }) => {
                             color: '#6c757d',
                             '&:hover': {
                                 background: 'rgba(102, 126, 234, 0.1)',
-                                color: '#667eea',
+                                color: '#ea590c',
                             },
                         }}
                     >
@@ -122,13 +122,13 @@ const NotificationDrawer = ({ open, onClose }) => {
                         sx={{
                             textTransform: 'none',
                             fontWeight: 600,
-                            color: '#667eea',
-                            border: '1px solid #667eea',
+                            color: '#ea590c',
+                            border: '1px solid #ea590c',
                             borderRadius: '10px',
                             py: 1,
                             '&:hover': {
-                                background: 'rgba(102, 126, 234, 0.08)',
-                                border: '1px solid #667eea',
+                                background: 'rgba(234, 89, 12, 0.08)',
+                                border: '1px solid #ea590c',
                             },
                         }}
                     >
@@ -146,7 +146,6 @@ const NotificationDrawer = ({ open, onClose }) => {
                                         py: 2.5,
                                         px: 3,
                                         background: notification.unread ? '#ffffff' : 'transparent',
-                                        borderLeft: notification.unread ? `4px solid ${notification.color}` : '4px solid transparent',
                                         cursor: 'pointer',
                                         transition: 'all 0.2s ease',
                                         '&:hover': {
@@ -219,12 +218,12 @@ const NotificationDrawer = ({ open, onClose }) => {
                         sx={{
                             textTransform: 'none',
                             fontWeight: 600,
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            background: 'linear-gradient(135deg, #ea590c 0%, #f97316 100%)',
                             color: 'white',
                             borderRadius: '10px',
                             py: 1.25,
                             '&:hover': {
-                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                background: 'linear-gradient(135deg, #ea590c 0%, #f97316 100%)',
                                 opacity: 0.9,
                             },
                         }}

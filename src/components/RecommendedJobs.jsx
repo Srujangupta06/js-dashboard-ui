@@ -76,7 +76,7 @@ const RecommendedJobs = ({ userRole = 'Product Manager' }) => {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                     <Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 0.5 }}>
-                            <Briefcase size={24} color="#667eea" />
+                            <Briefcase size={24} color="#ea590c" />
                             <Typography variant="h6" sx={{ fontWeight: 600, color: '#1a1a2e' }}>
                                 Recommended for You
                             </Typography>
@@ -88,7 +88,7 @@ const RecommendedJobs = ({ userRole = 'Product Manager' }) => {
                     <Button
                         endIcon={<ArrowUpRight size={16} />}
                         sx={{
-                            color: '#667eea',
+                            color: '#ea590c',
                             textTransform: 'none',
                             fontWeight: 600,
                             '&:hover': { background: 'rgba(102, 126, 234, 0.08)' },

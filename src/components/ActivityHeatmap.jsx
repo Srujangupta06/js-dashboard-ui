@@ -81,7 +81,7 @@ const ActivityHeatmap = () => {
             <CardContent sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Activity size={24} color="#667eea" />
+                        <Activity size={24} color="#ea590c" />
                         <Typography variant="h6" sx={{ fontWeight: 600, color: '#1a1a2e' }}>
                             Application Activity
                         </Typography>
@@ -101,10 +101,10 @@ const ActivityHeatmap = () => {
                                 border: '1px solid #e9ecef',
                                 color: '#6c757d',
                                 '&.Mui-selected': {
-                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                    background: 'linear-gradient(135deg, #ea590c 0%, #f97316 100%)',
                                     color: 'white',
                                     '&:hover': {
-                                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                        background: 'linear-gradient(135deg, #ea590c 0%, #f97316 100%)',
                                     },
                                 },
                             },
@@ -259,7 +259,7 @@ const ActivityHeatmap = () => {
                     }}
                 >
                     <Box>
-                        <Typography variant="h4" sx={{ fontWeight: 700, color: '#667eea', mb: 0.5 }}>
+                        <Typography variant="h4" sx={{ fontWeight: 700, color: '#ea590c', mb: 0.5 }}>
                             {activityData.reduce((sum, day) => sum + day.count, 0)}
                         </Typography>
                         <Typography variant="caption" sx={{ color: '#6c757d', fontWeight: 500 }}>

@@ -26,7 +26,7 @@ const JobCard = ({ job }) => {
                             width: 64,
                             height: 64,
                             fontSize: '32px',
-                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            background: 'linear-gradient(135deg, #ea590c 0%, #f97316 100%)',
                             boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)',
                         }}
                     >

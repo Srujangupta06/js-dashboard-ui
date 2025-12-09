@@ -1,0 +1,17 @@
+// Desktop Header Search Integration
+// Replace lines 291-348 in App.jsx with this code:
+
+<Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, ml: 'auto' }}>
+  <SearchBar isMobile={false} />
+  <IconButton
+    sx={{
+      color: '#6c757d',
+      '&:hover': { background: 'rgba(234, 89, 12, 0.1)', color: '#ea590c' },
+    }}
+    onClick={handleNotificationOpen}
+  >
+    <Badge badgeContent={notifications} color="error">
+      <Bell size={20} />
+    </Badge>
+  </IconButton>
+</Box>

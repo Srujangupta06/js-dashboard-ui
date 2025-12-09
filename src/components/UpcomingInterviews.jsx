@@ -14,7 +14,7 @@ const UpcomingInterviews = ({ interviews }) => {
         >
             <CardContent sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
-                    <Calendar size={24} color="#667eea" />
+                    <Calendar size={24} color="#ea590c" />
                     <Typography variant="h6" sx={{ fontWeight: 600, color: '#1a1a2e' }}>
                         Upcoming Interviews
                     </Typography>

@@ -19,7 +19,7 @@ const JobMap = ({ jobLocations }) => {
             <CardContent sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <Navigation size={24} color="#667eea" />
+                        <Navigation size={24} color="#ea590c" />
                         <Typography variant="h6" sx={{ fontWeight: 600, color: '#1a1a2e' }}>
                             Jobs Near You
                         </Typography>
@@ -29,7 +29,7 @@ const JobMap = ({ jobLocations }) => {
                         size="small"
                         sx={{
                             background: 'rgba(102, 126, 234, 0.1)',
-                            color: '#667eea',
+                            color: '#ea590c',
                             fontWeight: 600,
                             border: '1px solid rgba(102, 126, 234, 0.2)',
                             height: '28px',

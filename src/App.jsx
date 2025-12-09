@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -18,24 +18,32 @@ import {
   Menu,
   MenuItem,
   Avatar,
+  InputBase,
+  Paper,
+  ListItemIcon,
 } from '@mui/material';
-import { Bell, Search, Menu as MenuIcon, Briefcase, ArrowUpRight, MoreHorizontal, Bookmark, MessageSquare, Settings, HelpCircle } from 'lucide-react';
+
+import {
+  Bell,
+  Search,
+  Menu as MenuIcon,
+  Settings,
+  HelpCircle,
+  X,
+  User
+} from 'lucide-react';
+
 import L from 'leaflet';
 
 // Components
 import Sidebar from './components/Sidebar';
-import StatCard from './components/StatCard';
-import JobCard from './components/JobCard';
-import JobMap from './components/JobMap';
-import ApplicationStatus from './components/ApplicationStatus';
-import ProfileStrength from './components/ProfileStrength';
-import SkillsProgress from './components/SkillsProgress';
-import UpcomingInterviews from './components/UpcomingInterviews';
-import ActivityHeatmap from './components/ActivityHeatmap';
-import RecommendedJobs from './components/RecommendedJobs';
 import MobileBottomNav from './components/MobileBottomNav';
 import NotificationDrawer from './components/NotificationDrawer';
-import logo from './assets/logo.png'
+import SearchOverlay from './components/SearchOverlay';
+import SearchBar from './components/SearchBar';
+
+import logo from './assets/logo.png';
+
 // Data
 import {
   stats,
@@ -48,140 +56,149 @@ import {
 // Leaflet CSS
 import 'leaflet/dist/leaflet.css';
 
-// Fix for default marker icon in react-leaflet
+// Fix for default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+  iconRetinaUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
 const DRAWER_WIDTH = 260;
-const COLLAPSED_DRAWER_WIDTH = 80;
 
 const App = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const [notifications] = useState(3);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState('Dashboard');
   const [currentTab, setCurrentTab] = useState(0);
-  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+
   const [moreMenuAnchor, setMoreMenuAnchor] = useState(null);
+  const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
+
   const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [desktopSearchExpanded, setDesktopSearchExpanded] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const toggleSidebar = () => {
-    setSidebarExpanded(!sidebarExpanded);
-  };
-
-  const handleMoreMenuOpen = (event) => {
-    setMoreMenuAnchor(event.currentTarget);
-  };
-
-  const handleMoreMenuClose = () => {
-    setMoreMenuAnchor(null);
-  };
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+  const handleMoreMenuOpen = (e) => setMoreMenuAnchor(e.currentTarget);
+  const handleMoreMenuClose = () => setMoreMenuAnchor(null);
 
   const handleMoreMenuItemClick = (menuItem) => {
     setSelectedMenu(menuItem);
     handleMoreMenuClose();
   };
 
-  const handleNotificationOpen = () => {
-    setNotificationDrawerOpen(true);
+  const handleProfileMenuOpen = (e) => setProfileMenuAnchor(e.currentTarget);
+  const handleProfileMenuClose = () => setProfileMenuAnchor(null);
+
+  const handleProfileMenuItemClick = (menuItem) => {
+    setSelectedMenu(menuItem);
+    handleProfileMenuClose();
   };
 
-  const handleNotificationClose = () => {
-    setNotificationDrawerOpen(false);
-  };
+  const handleNotificationOpen = () => setNotificationDrawerOpen(true);
+  const handleNotificationClose = () => setNotificationDrawerOpen(false);
 
-  const handleTabChange = (event, newValue) => {
-    setCurrentTab(newValue);
-  };
+  const handleTabChange = (e, newValue) => setCurrentTab(newValue);
 
-  const recentJobs = jobLocations.slice(0, 3);
-
-  // Tab Panel Component
-  const TabPanel = ({ children, value, index }) => {
-    return (
-      <div role="tabpanel" hidden={value !== index}>
-        {value === index && <Box>{children}</Box>}
-      </div>
-    );
-  };
+  // Close menus when switching between mobile and desktop
+  useEffect(() => {
+    setProfileMenuAnchor(null);
+    setMoreMenuAnchor(null);
+  }, [isMobile]);
 
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', background: '#f8f9fa' }}>
-      {/* AppBar for Mobile */}
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      {/* MOBILE APPBAR */}
       {isMobile && (
         <AppBar
           position="fixed"
           sx={{
             background: '#ffffff',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
             borderBottom: '1px solid #e9ecef',
           }}
         >
-          <Toolbar sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-            <Box component={'img'} src={logo} sx={{ width: '100%', height: '100%', maxWidth: '120px', maxHeight: '100px' }} />
+          <Toolbar
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              component="img"
+              src={logo}
+              sx={{ maxWidth: '120px', maxHeight: '100px' }}
+            />
+
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton sx={{
-                color: '#6c757d',
-                width: 44,
-                height: 44,
-                '&:hover': { background: 'rgba(102, 126, 234, 0.1)', color: '#667eea' },
-              }} onClick={handleNotificationOpen}>
+              <IconButton
+                sx={{
+                  color: '#6c757d',
+                  '&:hover': {
+                    background: 'rgba(234,89,12,0.1)',
+                    color: '#ea590c',
+                  },
+                }}
+                onClick={() => setSearchOpen(true)}
+              >
+                <Search size={20} />
+              </IconButton>
+
+              <IconButton
+                sx={{
+                  color: '#6c757d',
+                  '&:hover': {
+                    background: 'rgba(234,89,12,0.1)',
+                    color: '#ea590c',
+                  },
+                }}
+                onClick={handleNotificationOpen}
+              >
                 <Badge badgeContent={notifications} color="error">
                   <Bell size={20} />
                 </Badge>
               </IconButton>
-              <IconButton
-                sx={{ color: '#1a1a2e', ml: 0.5 }}
-                onClick={handleMoreMenuOpen}
-              >
+
+              <IconButton onClick={handleMoreMenuOpen}>
                 <Avatar
                   sx={{
                     width: 32,
                     height: 32,
-                    background: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
-                    fontSize: '14px',
+                    background:
+                      'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
                   }}
                 >
                   JD
                 </Avatar>
               </IconButton>
+
               <Menu
                 anchorEl={moreMenuAnchor}
                 open={Boolean(moreMenuAnchor)}
                 onClose={handleMoreMenuClose}
-                sx={{
-                  '& .MuiPaper-root': {
-                    borderRadius: '12px',
-                    mt: 1,
-                    minWidth: 180,
-                  },
-                }}
               >
-                <MenuItem onClick={() => handleMoreMenuItemClick('Saved Jobs')}>
-                  <Bookmark size={18} style={{ marginRight: 12 }} />
-                  Saved Jobs
+                <MenuItem
+                  onClick={() => handleMoreMenuItemClick('Profile')}
+                >
+                  <User size={18} style={{ marginRight: 12 }} />
+                  Profile
                 </MenuItem>
-                <MenuItem onClick={() => handleMoreMenuItemClick('Messages')}>
-                  <MessageSquare size={18} style={{ marginRight: 12 }} />
-                  Messages
-                </MenuItem>
-                <MenuItem onClick={() => handleMoreMenuItemClick('Settings')}>
+
+                <MenuItem
+                  onClick={() => handleMoreMenuItemClick('Settings')}
+                >
                   <Settings size={18} style={{ marginRight: 12 }} />
                   Settings
                 </MenuItem>
+
                 <MenuItem onClick={() => handleMoreMenuItemClick('Help')}>
                   <HelpCircle size={18} style={{ marginRight: 12 }} />
                   Help
@@ -192,59 +209,63 @@ const App = () => {
         </AppBar>
       )}
 
-      {/* Sidebar */}
-      <Box component="nav" sx={{ width: { md: sidebarExpanded ? DRAWER_WIDTH : COLLAPSED_DRAWER_WIDTH }, flexShrink: { md: 0 } }}>
-        {/* Mobile drawer */}
+      {/* SIDEBAR */}
+      <Box
+        component="nav"
+        sx={{ width: { md: DRAWER_WIDTH }, flexShrink: { md: 0 } }}
+      >
+        {/* MOBILE DRAWER */}
         <Drawer
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
+          ModalProps={{ keepMounted: true }}
           sx={{
             display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
               width: DRAWER_WIDTH,
-              background: '#ffffff',
               borderRight: '1px solid #e9ecef',
             },
           }}
         >
-          <Sidebar selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} isExpanded={true} toggleSidebar={handleDrawerToggle} />
+          <Sidebar
+            selectedMenu={selectedMenu}
+            setSelectedMenu={setSelectedMenu}
+            isExpanded
+          />
         </Drawer>
-        {/* Desktop drawer */}
+
+        {/* DESKTOP DRAWER */}
         <Drawer
           variant="permanent"
           sx={{
             display: { xs: 'none', md: 'block' },
             '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
-              width: sidebarExpanded ? DRAWER_WIDTH : COLLAPSED_DRAWER_WIDTH,
-              background: '#ffffff',
+              width: DRAWER_WIDTH,
               borderRight: '1px solid #e9ecef',
-              transition: 'width 0.3s ease',
             },
           }}
           open
         >
-          <Sidebar selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} isExpanded={sidebarExpanded} toggleSidebar={toggleSidebar} />
+          <Sidebar
+            selectedMenu={selectedMenu}
+            setSelectedMenu={setSelectedMenu}
+            isExpanded
+          />
         </Drawer>
       </Box>
 
-      {/* Main Content */}
+      {/* MAIN CONTENT */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          width: { md: `calc(100% - ${sidebarExpanded ? DRAWER_WIDTH : COLLAPSED_DRAWER_WIDTH}px)` },
-          minHeight: '100vh',
+          width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` },
           background: '#f8f9fa',
-          transition: 'width 0.3s ease',
+          overflow: 'hidden',
         }}
       >
-        {/* Top Bar for Desktop */}
+        {/* DESKTOP TOP BAR */}
         {!isMobile && (
           <Box
             sx={{
@@ -252,74 +273,241 @@ const App = () => {
               borderBottom: '1px solid #e9ecef',
               position: 'sticky',
               top: 0,
-              zIndex: 1000,
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+              zIndex: 1100,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
             }}
           >
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
                 alignItems: 'center',
                 px: 4,
-                py: 2.5,
+                py: 1.5,
               }}
             >
-              {/* <Typography variant="h5" sx={{ fontWeight: 700, color: '#1a1a2e' }}>
-                {selectedMenu}
-              </Typography> */}
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              {/* SEARCH */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  background: desktopSearchExpanded ? '#f8f9fa' : 'transparent',
+                  borderRadius: '24px',
+                  width: desktopSearchExpanded ? '300px' : '44px',
+                  height: '44px',
+                  border: desktopSearchExpanded
+                    ? '1px solid #e9ecef'
+                    : 'none',
+                  transition: '0.3s',
+                  overflow: 'hidden',
+                }}
+              >
                 <IconButton
-                  sx={{
-                    color: '#6c757d',
-                    background: '#f8f9fa',
-                    width: 44,
-                    height: 44,
-                    '&:hover': { background: 'rgba(102, 126, 234, 0.1)', color: '#667eea' },
-                  }}
+                  onClick={() =>
+                    setDesktopSearchExpanded(!desktopSearchExpanded)
+                  }
                 >
                   <Search size={20} />
                 </IconButton>
-                <IconButton
-                  sx={{
-                    color: '#6c757d',
-                    background: '#f8f9fa',
-                    width: 44,
-                    height: 44,
-                    '&:hover': { background: 'rgba(102, 126, 234, 0.1)', color: '#667eea' },
-                  }}
-                  onClick={handleNotificationOpen}
-                >
-                  <Badge badgeContent={notifications} color="error">
-                    <Bell size={20} />
-                  </Badge>
-                </IconButton>
+
+                {desktopSearchExpanded && (
+                  <>
+                    <InputBase
+                      placeholder="Search..."
+                      sx={{ ml: 1, flex: 1 }}
+                      autoFocus
+                    />
+                    <IconButton
+                      onClick={() => setDesktopSearchExpanded(false)}
+                    >
+                      <X size={16} />
+                    </IconButton>
+                  </>
+                )}
               </Box>
+
+              {/* NOTIFICATIONS */}
+              <IconButton onClick={handleNotificationOpen}>
+                <Badge badgeContent={notifications} color="error">
+                  <Bell size={20} />
+                </Badge>
+              </IconButton>
+
+              {/* PROFILE */}
+              <IconButton onClick={handleProfileMenuOpen}>
+                <Avatar
+                  sx={{
+                    width: 36,
+                    height: 36,
+                    background:
+                      'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                  }}
+                >
+                  JD
+                </Avatar>
+              </IconButton>
+
+              {/* PROFILE MENU */}
+              <Menu
+                anchorEl={profileMenuAnchor}
+                open={Boolean(profileMenuAnchor)}
+                onClose={handleProfileMenuClose}
+              >
+                <MenuItem onClick={() => handleProfileMenuItemClick('Profile')}>
+                  <User size={18} style={{ marginRight: 12 }} />
+                  Profile
+                </MenuItem>
+
+                <MenuItem
+                  onClick={() => handleProfileMenuItemClick('Settings')}
+                >
+                  <Settings size={18} style={{ marginRight: 12 }} />
+                  Settings
+                </MenuItem>
+
+                <MenuItem onClick={() => handleProfileMenuItemClick('Help')}>
+                  <HelpCircle size={18} style={{ marginRight: 12 }} />
+                  Help
+                </MenuItem>
+              </Menu>
             </Box>
           </Box>
         )}
 
-        {/* Content Area */}
-        <Box sx={{ p: { xs: 2.5, md: 4 }, mt: { xs: 8, md: 0 }, pb: { xs: 10, md: 4 } }}>
-          {/* Welcome Section */}
-          <Box sx={{ mb: 3 }}>
-            <Typography sx={{ fontWeight: 700, color: '#1a1a2e', mb: 1, fontSize: 'clamp(1.5rem, 2vw, 2rem)' }}>
-              Welcome back, John! 👋
-            </Typography>
-            <Typography variant="body1" sx={{ color: '#6c757d', fontWeight: 500, fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}>
-              Here's what's happening with your job search today.
-            </Typography>
-          </Box>
+        {/* MAIN CONTENT AREA */}
+        <Box
+          sx={{
+            p: { xs: 2.5, md: 3, lg: 4 },
+            mt: { xs: 8, md: 0 },
+            pb: { xs: 10, md: 4 },
+          }}
+        >
+          <Typography
+            sx={{
+              fontWeight: 700,
+              color: '#1a1a2e',
+              mb: 1,
+              fontSize: '1.8rem',
+            }}
+          >
+            Welcome back, John! 👋
+          </Typography>
 
+          <Typography sx={{ color: '#6c757d', fontWeight: 500, mb: 4 }}>
+            Here's what's happening with your job search today.
+          </Typography>
 
+          {/* ACCOUNT SUMMARY */}
+          <Grid container spacing={3}>
+              {stats.map((stat, index) => {
+                const IconComponent = stat.icon;
+                return (
+                  <Grid item xs={12} sm={6} md={4} lg={4} key={index}>
+                    <Card
+                      sx={{
+                        width:'100%',
+                        background: `linear-gradient(135deg, ${stat.bgLight} 0%, #ffffff 100%)`,
+                        borderRadius: '20px',
+                        border: 'none',
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          bottom: 0,
+                          width: '6px',
+                          background: stat.gradient,
+                        },
+                        '&:hover': {
+                          transform: 'translateY(-8px) scale(1.02)',
+                          boxShadow: `0 12px 32px ${stat.color}40`,
+                        },
+                      }}
+                    >
+                      <CardContent sx={{ p: 3.5 }}>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            mb: 3,
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              width: 56,
+                              height: 56,
+                              borderRadius: '16px',
+                              background: '#ffffff',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              boxShadow: `0 4px 12px ${stat.color}30`,
+                              transition: 'all 0.3s ease',
+                              '&:hover': {
+                                transform: 'rotate(10deg) scale(1.1)',
+                              },
+                            }}
+                          >
+                            <IconComponent
+                              size={28}
+                              style={{ color: stat.color, strokeWidth: 2.5 }}
+                            />
+                          </Box>
+                        </Box>
+
+                        <Typography
+                          sx={{
+                            fontSize: '0.8rem',
+                            color: '#6c757d',
+                            fontWeight: 600,
+                            mb: 1,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px',
+                          }}
+                        >
+                          {stat.title}
+                        </Typography>
+
+                        <Typography
+                          sx={{
+                            fontSize: '2rem',
+                            fontWeight: 800,
+                            background: stat.gradient,
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          {stat.value}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                );
+              })}
+            </Grid>
         </Box>
       </Box>
 
-      {/* Mobile Bottom Navigation */}
-      <MobileBottomNav selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+      {/* MOBILE BOTTOM NAV */}
+      <MobileBottomNav
+        selectedMenu={selectedMenu}
+        setSelectedMenu={setSelectedMenu}
+      />
 
-      {/* Notification Drawer */}
-      <NotificationDrawer open={notificationDrawerOpen} onClose={handleNotificationClose} />
+      {/* NOTIFICATION DRAWER */}
+      <NotificationDrawer
+        open={notificationDrawerOpen}
+        onClose={handleNotificationClose}
+      />
+
+      {/* SEARCH OVERLAY */}
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </Box>
   );
 };
