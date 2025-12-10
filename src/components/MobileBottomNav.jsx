@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Paper, Box, Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, IconButton, Divider, Avatar, useTheme, useMediaQuery } from '@mui/material';
 import {
     Home,
@@ -17,9 +18,25 @@ import {
 import { Bookmark, Star, Users, Building, FolderOpen, Settings, HelpCircle, MessageSquare } from 'lucide-react';
 
 const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
+    const navigate = useNavigate();
     const [moreDrawerOpen, setMoreDrawerOpen] = useState(false);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+    // Route mappings
+    const routeMap = {
+        'Dashboard': '/dashboard',
+        'Jobs': '/job-search',
+        'Saved': '/saved',
+        'Applied': '/applied',
+        'Resumes': '/resumes',
+        'Shortlisted': '/shortlisted',
+        'Network': '/network',
+        'Companies': '/companies',
+        'File Manager': '/file-manager',
+        'Settings': '/settings',
+        'Help & Support': '/help',
+    };
 
     // Core 5 navigation items - most frequently used
     const bottomNavItems = [
@@ -62,12 +79,18 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
         } else {
             setSelectedMenu(newValue);
             setMoreDrawerOpen(false);
+            if (routeMap[newValue]) {
+                navigate(routeMap[newValue]);
+            }
         }
     };
 
     const handleMoreMenuItemClick = (menuItem) => {
         setSelectedMenu(menuItem);
         setMoreDrawerOpen(false);
+        if (routeMap[menuItem]) {
+            navigate(routeMap[menuItem]);
+        }
     };
 
     // Close drawer when switching to desktop
@@ -271,8 +294,8 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
                                     label={item.text}
                                     value={item.text}
                                     icon={
-                                        <MoreHoriz 
-                                            sx={{ 
+                                        <MoreHoriz
+                                            sx={{
                                                 fontSize: 24,
                                                 color: moreDrawerOpen ? '#ea590c' : '#6c757d',
                                                 transition: 'all 0.2s ease',
@@ -293,16 +316,16 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
                         if (item.isLucide) {
                             const isSelected = selectedMenu === item.text;
                             const LucideIcon = item.icon;
-                            
+
                             return (
                                 <BottomNavigationAction
                                     key={item.text}
                                     label={item.text}
                                     value={item.text}
                                     icon={
-                                        <LucideIcon 
+                                        <LucideIcon
                                             size={24}
-                                            style={{ 
+                                            style={{
                                                 color: isSelected ? '#ea590c' : '#6c757d',
                                                 fill: isSelected ? '#ea590c' : 'none',
                                                 transition: 'all 0.2s ease',

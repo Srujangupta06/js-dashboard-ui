@@ -1,75 +1,90 @@
 import React from 'react';
-import { Box, Card, CardContent, Typography, Chip } from '@mui/material';
-import { TrendingUp } from 'lucide-react';
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
-const StatCard = ({ stat }) => {
+const StatCard = ({ stat, IconComponent }) => {
     return (
-        <Card
+        <Grid item xs={12} sm={6} md={4} lg={3}
             sx={{
-                background: '#ffffff',
-                border: '1px solid #e9ecef',
-                borderRadius: '16px',
+                background: '#ffffffff',
+                border: 'none',
+                borderRadius: '12px',
                 overflow: 'hidden',
                 position: 'relative',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
                 height: '100%',
+                width: { xs: '100%', sm: '30%', md: '30%', lg: '18%', xl: '15%' },
                 '&:hover': {
-                    transform: 'translateY(-8px)',
-                    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.12)',
-                    border: `1px solid ${stat.color}`,
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
+                    borderColor: '#dee2e6',
                 },
             }}
         >
             <Box
                 sx={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    width: '100px',
-                    height: '100px',
-                    background: stat.gradient,
-                    opacity: 0.08,
-                    borderRadius: '0 0 0 100%',
+                    p: 3,
+                    '&:last-child': {
+                        pb: 3,
+                    }
                 }}
-            />
-            <CardContent sx={{ position: 'relative', zIndex: 1, p: 3 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+            >
+                {/* Icon and Content Container */}
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                    {/* Icon */}
                     <Box
                         sx={{
-                            width: 56,
-                            height: 56,
-                            borderRadius: '14px',
-                            background: stat.gradient,
+                            width: 40,
+                            height: 40,
+                            minWidth: 40,
+                            borderRadius: '10px',
+                            background: stat.color,
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            boxShadow: `0 4px 12px ${stat.color}40`,
+                            transition: 'all 0.3s ease',
                         }}
                     >
-                        <stat.icon size={28} color="white" />
+                        <IconComponent
+                            size={20}
+                            style={{
+                                color: '#ffffff',
+                                strokeWidth: 2.5,
+                            }}
+                        />
                     </Box>
-                    <Chip
-                        label={stat.change}
-                        size="small"
-                        sx={{
-                            background: 'rgba(56, 239, 125, 0.1)',
-                            color: '#11998e',
-                            fontWeight: 600,
-                            border: '1px solid rgba(56, 239, 125, 0.2)',
-                            height: '28px',
-                        }}
-                        icon={<TrendingUp size={14} />}
-                    />
+
+                    {/* Stats Content */}
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                        {/* Value */}
+                        <Typography
+                            sx={{
+                                fontSize: 'clamp(24px, 3vw, 32px)',
+                                fontWeight: 400,
+                                color: '#1a1a2e',
+                                lineHeight: 1.2,
+                                mb: 0.5,
+                                letterSpacing: '-0.5px',
+                            }}
+                        >
+                            {stat.value}
+                        </Typography>
+
+                        {/* Title */}
+                        <Typography
+                            sx={{
+                                fontSize: '13px',
+                                color: '#6c757d',
+                                fontWeight: 500,
+                                lineHeight: 1.4,
+                            }}
+                        >
+                            {stat.title}
+                        </Typography>
+                    </Box>
                 </Box>
-                <Typography variant="h3" sx={{ fontWeight: 700, mb: 0.5, color: '#1a1a2e' }}>
-                    {stat.value}
-                </Typography>
-                <Typography variant="body2" sx={{ color: '#6c757d', fontWeight: 500 }}>
-                    {stat.title}
-                </Typography>
-            </CardContent>
-        </Card>
+            </Box>
+        </Grid>
     );
 };
 

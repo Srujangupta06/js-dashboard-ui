@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
     Box,
     Typography,
@@ -31,24 +32,33 @@ import {
     FolderOpen,
 } from 'lucide-react';
 import logo from '../assets/logo.png';
+
 const menuItems = [
-    { text: 'Dashboard', icon: Home },
-    { text: 'Job Search', icon: Search },
-    { text: 'Resumes', icon: FileText },
-    { text: 'File Manager', icon: FolderOpen },
-    { text: 'Network', icon: Users },
-    { text: 'Shortlisted', icon: Star },
-    { text: 'Saved', icon: Bookmark },
-    { text: 'Applied', icon: Send },
-    { text: 'Companies', icon: Building },
+    { text: 'Dashboard', icon: Home, path: '/dashboard' },
+    { text: 'Job Search', icon: Search, path: '/job-search' },
+    { text: 'Resumes', icon: FileText, path: '/resumes' },
+    { text: 'File Manager', icon: FolderOpen, path: '/file-manager' },
+    { text: 'Network', icon: Users, path: '/network' },
+    { text: 'Shortlisted', icon: Star, path: '/shortlisted' },
+    { text: 'Saved', icon: Bookmark, path: '/saved' },
+    { text: 'Applied', icon: Send, path: '/applied' },
+    { text: 'Companies', icon: Building, path: '/companies' },
 ];
 
 const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleMenuClick = (item) => {
+        setSelectedMenu(item.text);
+        navigate(item.path);
+    };
+
     return (
-        <Box 
-            sx={{ 
-                height: '100%', 
-                display: 'flex', 
+        <Box
+            sx={{
+                height: '100%',
+                display: 'flex',
                 flexDirection: 'column',
                 overflowY: 'auto',
                 '&::-webkit-scrollbar': {
@@ -78,7 +88,7 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded }) => {
                     gap: 2,
                 }}
             >
-                <Box component={'img'} src={logo} sx={{ width: '100%', height: '100%', maxWidth: '160px', maxHeight: '100px', objectFit: 'contain',mb: '10px' }} />
+                <Box component={'img'} src={logo} sx={{ width: '100%', height: '100%', maxWidth: '160px', maxHeight: '100px', objectFit: 'contain', mb: '10px' }} />
             </Box>
 
             {/* User Profile Section */}
@@ -124,7 +134,7 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded }) => {
                         <Tooltip title="" placement="right">
                             <ListItemButton
                                 selected={selectedMenu === item.text}
-                                onClick={() => setSelectedMenu(item.text)}
+                                onClick={() => handleMenuClick(item)}
                                 sx={{
                                     borderRadius: '12px',
                                     py: 1.25,
@@ -161,7 +171,7 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded }) => {
                                     primary={item.text}
                                     primaryTypographyProps={{
                                         fontSize: '15px',
-                                        fontWeight: selectedMenu === item.text ? 600 : 500,
+                                        fontWeight: selectedMenu === item.text ? 600 : 400,
                                     }}
                                 />
                             </ListItemButton>
