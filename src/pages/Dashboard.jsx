@@ -88,7 +88,7 @@ const Dashboard = () => {
                 {/* Maps Placeholder */}
                 <Box
                     sx={{
-                        width: '400px',
+                        width: {xs:'100%',md:'50%', lg: '380px' },
                         height: { xs: '400px', lg: '600px' },
                         background: '#ffffff',
                         borderRadius: '8px',

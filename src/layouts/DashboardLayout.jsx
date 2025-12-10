@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, Link as RouterLink } from 'react-router-dom';
 import {
     Box,
     IconButton,
@@ -385,6 +385,8 @@ const DashboardLayout = () => {
                 component="main"
                 sx={{
                     flexGrow: 1,
+                    pt:2,
+                    pb:4,
                     width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` },
                     background: '#f3f8ffff',
                     overflow: 'hidden',
@@ -394,11 +396,15 @@ const DashboardLayout = () => {
                 {!isMobile && (
                     <Box
                         sx={{
-                            background: 'transparent',
-                            position: 'sticky',
+                            background: 'rgba(243, 248, 255, 0.8)',
+                            backdropFilter: 'blur(12px)',
+                            WebkitBackdropFilter: 'blur(12px)',
+                            position: 'fixed',
                             top: 0,
+                            left: { xs: 0, md: DRAWER_WIDTH },
+                            right: 0,
+                            width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` },
                             zIndex: 1100,
-                            pt: 2
                         }}
                     >
                         <Box
@@ -406,8 +412,8 @@ const DashboardLayout = () => {
                                 display: 'flex',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                px: 4,
-                                py: 1,
+                                px: 3,
+                                py: 2,
                             }}
                         >
                             {/* BREADCRUMBS - LEFT SIDE */}
@@ -421,12 +427,14 @@ const DashboardLayout = () => {
                                     }}
                                 >
                                     <Link
-                                        underline="none"
+                                        component={RouterLink}
+                                        to="/dashboard"
                                         sx={{
                                             fontSize: '14px',
                                             color: '#94a3b8',
                                             fontWeight: 400,
                                             cursor: 'pointer',
+                                            textDecoration: 'none',
                                             '&:hover': {
                                                 color: '#ea590c',
                                             },
@@ -564,10 +572,10 @@ const DashboardLayout = () => {
                                             width: 36,
                                             height: 36,
                                             background:
-                                                'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                                                'linear-gradient(135deg, #ea590c 0%, #ea590c 100%)',
                                         }}
                                     >
-                                        JD
+                                        <span style={{ fontSize: '16px', fontWeight: 600 }}>JD</span>
                                     </Avatar>
                                 </IconButton>
 
@@ -726,8 +734,9 @@ const DashboardLayout = () => {
                 <Box
                     sx={{
                         p: { xs: 1.5, md: 2, lg: 3 },
-                        mt: { xs: 8, md: 0 },
                         pb: { xs: 10, md: 4 },
+                        position: 'relative',
+                        top: { xs: 60, md: 80 },
                     }}
                 >
                     <Outlet />

@@ -44,7 +44,7 @@ const CustomTooltip = ({ active, payload }) => {
                 <Typography sx={{ fontSize: '12px', fontWeight: 600, color: '#1e293b', mb: 0.5 }}>
                     {payload[0].payload.name}
                 </Typography>
-                <Typography sx={{ fontSize: '13px', color: '#ea590c', fontWeight: 700 }}>
+                <Typography sx={{ fontSize: '13px', color: '#ce4a03ff', fontWeight: 700 }}>
                     {payload[0].value} applications
                 </Typography>
             </Box>
@@ -247,9 +247,9 @@ const ActivityTracker = () => {
                             <Line
                                 type="monotone"
                                 dataKey="applications"
-                                stroke="#4f46e5"
+                                stroke="#ce4a03ff"
                                 strokeWidth={3}
-                                dot={{ fill: '#4f46e5', r: 5 }}
+                                dot={{ fill: '#ce4a03ff', r: 5 }}
                                 activeDot={{ r: 7 }}
                             />
                         </LineChart>

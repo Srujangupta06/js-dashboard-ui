@@ -11,6 +11,7 @@ import {
     MoreHoriz,
     Close,
     Description,
+    DescriptionOutlined,
     Settings as SettingsIcon,
     HelpOutline,
     Message,
@@ -42,7 +43,7 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
     const bottomNavItems = [
         { text: 'Dashboard', iconOutlined: HomeOutlined, iconFilled: Home },
         { text: 'Jobs', iconOutlined: SearchOutlined, iconFilled: Search },
-        { text: 'Saved', icon: Bookmark, isLucide: true },
+        { text: 'Resumes', iconOutlined: DescriptionOutlined, iconFilled: Description },
         { text: 'Applied', iconOutlined: SendOutlined, iconFilled: Send },
         { text: 'More', isMore: true },
     ];
@@ -52,7 +53,7 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
         {
             title: 'Job Management',
             items: [
-                { text: 'Resumes', icon: Description, color: '#ea590c' },
+                { text: 'Saved', icon: Bookmark, color: '#ea590c' },
                 { text: 'Shortlisted', icon: Star, color: '#FF9800' },
             ],
         },

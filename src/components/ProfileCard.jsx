@@ -4,7 +4,7 @@ import { Clock, CheckCircle } from 'lucide-react';
 
 const ProfileCard = () => {
     // Profile completion percentage
-    const profileCompletion = 50;
+    const profileCompletion = 75;
 
     // Function to get color based on completion percentage
     const getProgressColor = (percentage) => {
@@ -45,34 +45,26 @@ const ProfileCard = () => {
                     zIndex: 2,
                 }}
             >
-                <Box
+                <Avatar
                     sx={{
-                        background: 'white',
-                        borderRadius: '50%',
-                        p: 0.5,
+                        width: 56,
+                        height: 56,
+                        background: '#fff',
+                        fontSize: '24px',
+                        fontWeight: 600,
+                        color: '#ea590c',
                         boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                     }}
                 >
-                    <Avatar
-                        sx={{
-                            width: 56,
-                            height: 56,
-                            background: 'linear-gradient(135deg, #ea590c25 0%, #ea590c15 100%)',
-                            fontSize: '24px',
-                            fontWeight: 600,
-                            color: '#ea590c',
-                        }}
-                    >
-                        JD
-                    </Avatar>
-                </Box>
+                    JD
+                </Avatar>
             </Box>
 
             {/* Card Content */}
             <Box
                 sx={{
-                    border: '1px solid #E0E0E0',
-                    background: '#F4F4F4',
+                    border: '1px solid #ea590c',
+                    background: '#fdede4ff',
                     borderRadius: '10px',
                     pt: 4.5,
                     pb: 2.5,
@@ -84,9 +76,9 @@ const ProfileCard = () => {
                     transition: 'all 0.3s ease',
                     cursor: 'pointer',
                     '&:hover': {
-                        background: '#D6E2F0',
-                        borderColor: '#4B7BFF',
-                        boxShadow: '0 4px 12px rgba(75, 123, 255, 0.15)',
+                        background: '#fff5f0',
+                        borderColor: '#ea590c',
+                        boxShadow: '0 4px 12px rgba(234, 89, 12, 0.2)',
                     },
                     '&::before': {
                         content: '""',
@@ -199,6 +191,30 @@ const ProfileCard = () => {
                                 }}
                             />
                         </Box>
+                    </Box>
+
+                    {/* Last Visited */}
+                    <Box 
+                        sx={{ 
+                            mt: 2.5,
+                            pt: 2,
+                            borderTop: '1px solid rgba(234, 89, 12, 0.2)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 1,
+                        }}
+                    >
+                        <Clock size={14} color="#64748b" />
+                        <Typography
+                            sx={{
+                                fontSize: '11px',
+                                color: '#64748b',
+                                fontWeight: 500,
+                            }}
+                        >
+                            Last visited: 2 hrs ago
+                        </Typography>
                     </Box>
 
                     {/* View Profile Button */}

@@ -93,8 +93,9 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded }) => {
                                     position: 'relative',
                                     transition: 'all 0.2s ease',
                                     '&.Mui-selected': {
-                                        background: 'transparent',
+                                        background: 'rgba(234, 89, 12, 0.05)',
                                         color: '#1e293b',
+                                        border: '1px solid #ea590c',
                                         '&::after': {
                                             content: '""',
                                             position: 'absolute',
@@ -107,7 +108,7 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded }) => {
                                             borderRadius: '4px 0 0 4px',
                                         },
                                         '&:hover': {
-                                            background: '#f8f9fa',
+                                            background: 'rgba(234, 89, 12, 0.08)',
                                         },
                                         '& .MuiListItemIcon-root': {
                                             color: '#ea590c',
