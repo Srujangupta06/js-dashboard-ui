@@ -16,6 +16,11 @@ import {
     Typography,
     Breadcrumbs,
     Link,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Button,
 } from '@mui/material';
 
 import {
@@ -26,6 +31,7 @@ import {
     X,
     User,
     ChevronRight,
+    LogOut,
 } from 'lucide-react';
 
 // Components
@@ -53,6 +59,7 @@ const DashboardLayout = () => {
     const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [desktopSearchExpanded, setDesktopSearchExpanded] = useState(false);
+    const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
     // Get current page name from route
     const getCurrentPageName = () => {
@@ -66,17 +73,38 @@ const DashboardLayout = () => {
     const handleMoreMenuOpen = (e) => setMoreMenuAnchor(e.currentTarget);
     const handleMoreMenuClose = () => setMoreMenuAnchor(null);
 
-    const handleMoreMenuItemClick = (menuItem) => {
-        setSelectedMenu(menuItem);
-        handleMoreMenuClose();
-    };
-
     const handleProfileMenuOpen = (e) => setProfileMenuAnchor(e.currentTarget);
     const handleProfileMenuClose = () => setProfileMenuAnchor(null);
 
     const handleProfileMenuItemClick = (menuItem) => {
-        setSelectedMenu(menuItem);
-        handleProfileMenuClose();
+        if (menuItem === 'Logout') {
+            setLogoutDialogOpen(true);
+            handleProfileMenuClose();
+        } else {
+            setSelectedMenu(menuItem);
+            handleProfileMenuClose();
+        }
+    };
+
+    const handleMoreMenuItemClick = (menuItem) => {
+        if (menuItem === 'Logout') {
+            setLogoutDialogOpen(true);
+            handleMoreMenuClose();
+        } else {
+            setSelectedMenu(menuItem);
+            handleMoreMenuClose();
+        }
+    };
+
+    const handleLogoutConfirm = () => {
+        // Add your logout logic here (e.g., clear tokens, redirect to login)
+        console.log('User logged out');
+        setLogoutDialogOpen(false);
+        // Example: window.location.href = '/login';
+    };
+
+    const handleLogoutCancel = () => {
+        setLogoutDialogOpen(false);
     };
 
     const handleNotificationOpen = () => setNotificationDrawerOpen(true);
@@ -161,24 +189,144 @@ const DashboardLayout = () => {
                                 anchorEl={moreMenuAnchor}
                                 open={Boolean(moreMenuAnchor)}
                                 onClose={handleMoreMenuClose}
+                                PaperProps={{
+                                    sx: {
+                                        mt: 1.5,
+                                        minWidth: 180,
+                                        borderRadius: '12px',
+                                        boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                                        border: '1px solid #e9ecef',
+                                        overflow: 'visible',
+                                        '&::before': {
+                                            content: '""',
+                                            display: 'block',
+                                            position: 'absolute',
+                                            top: 0,
+                                            right: 14,
+                                            width: 10,
+                                            height: 10,
+                                            bgcolor: '#ffffff',
+                                            transform: 'translateY(-50%) rotate(45deg)',
+                                            border: '1px solid #e9ecef',
+                                            borderRight: 'none',
+                                            borderBottom: 'none',
+                                            zIndex: 0,
+                                        },
+                                    },
+                                }}
                             >
                                 <MenuItem
                                     onClick={() => handleMoreMenuItemClick('Profile')}
+                                    sx={{
+                                        py: 1,
+                                        px: 1,
+                                        gap: 1,
+                                        borderRadius: '8px',
+                                        mx: 1,
+                                        my: 0.5,
+                                        '&:hover': {
+                                            bgcolor: '#f8f9fa',
+                                        },
+                                    }}
                                 >
-                                    <User size={18} style={{ marginRight: 12 }} />
-                                    Profile
+                                    <Box sx={{ 
+                                        width: 32, 
+                                        height: 32, 
+                                        borderRadius: '8px', 
+                                        bgcolor: '#f1f5f9', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        justifyContent: 'center' 
+                                    }}>
+                                        <User size={16} color="#64748b" />
+                                    </Box>
+                                    <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#1e293b' }}>Profile</Typography>
                                 </MenuItem>
 
                                 <MenuItem
                                     onClick={() => handleMoreMenuItemClick('Settings')}
+                                    sx={{
+                                        py: 1,
+                                        px: 2,
+                                        gap: 1,
+                                        borderRadius: '8px',
+                                      
+                                        my: 0.5,
+                                        '&:hover': {
+                                            bgcolor: '#f8f9fa',
+                                        },
+                                    }}
                                 >
-                                    <Settings size={18} style={{ marginRight: 12 }} />
-                                    Settings
+                                    <Box sx={{ 
+                                        width: 32, 
+                                        height: 32, 
+                                        borderRadius: '8px', 
+                                        bgcolor: '#f1f5f9', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        justifyContent: 'center' 
+                                    }}>
+                                        <Settings size={16} color="#64748b" />
+                                    </Box>
+                                    <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#1e293b' }}>Settings</Typography>
                                 </MenuItem>
 
-                                <MenuItem onClick={() => handleMoreMenuItemClick('Help')}>
-                                    <HelpCircle size={18} style={{ marginRight: 12 }} />
-                                    Help
+                                <MenuItem 
+                                    onClick={() => handleMoreMenuItemClick('Help')}
+                                    sx={{
+                                        py: 1,
+                                        px: 2,
+                                        gap: 1,
+                                        borderRadius: '8px',
+    
+                                        my: 0.5,
+                                        '&:hover': {
+                                            bgcolor: '#f8f9fa',
+                                        },
+                                    }}
+                                >
+                                    <Box sx={{ 
+                                        width: 32, 
+                                        height: 32, 
+                                        borderRadius: '8px', 
+                                        bgcolor: '#f1f5f9', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        justifyContent: 'center' 
+                                    }}>
+                                        <HelpCircle size={16} color="#64748b" />
+                                    </Box>
+                                    <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#1e293b' }}>Help</Typography>
+                                </MenuItem>
+
+                                <MenuItem 
+                                    onClick={() => handleMoreMenuItemClick('Logout')}
+                                    sx={{
+                                        py: 1,
+                                        px: 2,
+                                        gap: 1,
+                                        borderRadius: '8px',
+                                        my: 0.5,
+                                        mt: 1,
+                                        borderTop: '1px solid #e9ecef',
+                                        pt: 2,
+                                        '&:hover': {
+                                            bgcolor: '#fee2e2',
+                                        },
+                                    }}
+                                >
+                                    <Box sx={{ 
+                                        width: 32, 
+                                        height: 32, 
+                                        borderRadius: '8px', 
+                                        bgcolor: '#fee2e2', 
+                                        display: 'flex', 
+                                        alignItems: 'center', 
+                                        justifyContent: 'center' 
+                                    }}>
+                                        <LogOut size={16} color="#dc2626" />
+                                    </Box>
+                                    <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#dc2626' }}>Logout</Typography>
                                 </MenuItem>
                             </Menu>
                         </Box>
@@ -318,7 +466,7 @@ const DashboardLayout = () => {
                                             fontSize: '14px',
                                             color: '#1e293b',
                                             '& ::placeholder': {
-                                                color: '#94a3b8',
+                                                color: '#707174ff',
                                                 opacity: 1,
                                             },
                                         }}
@@ -366,7 +514,6 @@ const DashboardLayout = () => {
                                                         alignItems: 'center',
                                                         gap: 1.5,
                                                         py: 1.5,
-                                                        px: 1.5,
                                                         borderRadius: '8px',
                                                         cursor: 'pointer',
                                                         transition: 'all 0.2s',
@@ -429,22 +576,145 @@ const DashboardLayout = () => {
                                     anchorEl={profileMenuAnchor}
                                     open={Boolean(profileMenuAnchor)}
                                     onClose={handleProfileMenuClose}
+                                    PaperProps={{
+                                        sx: {
+                                            mt: 1.5,
+                                            minWidth: 200,
+                                            borderRadius: '12px',
+                                            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                                            border: '1px solid #e9ecef',
+                                            overflow: 'visible',
+                                            '&::before': {
+                                                content: '""',
+                                                display: 'block',
+                                                position: 'absolute',
+                                                top: 0,
+                                                right: 14,
+                                                width: 10,
+                                                height: 10,
+                                                bgcolor: '#ffffff',
+                                                transform: 'translateY(-50%) rotate(45deg)',
+                                                border: '1px solid #e9ecef',
+                                                borderRight: 'none',
+                                                borderBottom: 'none',
+                                                zIndex: 0,
+                                            },
+                                        },
+                                    }}
                                 >
-                                    <MenuItem onClick={() => handleProfileMenuItemClick('Profile')}>
-                                        <User size={18} style={{ marginRight: 12 }} />
-                                        Profile
+                                    <MenuItem 
+                                        onClick={() => handleProfileMenuItemClick('Profile')}
+                                        sx={{
+                                            py: 1.5,
+                                            px: 2,
+                                            gap: 1.5,
+                                            borderRadius: '8px',
+                                            mx: 1,
+                                            my: 0.5,
+                                            '&:hover': {
+                                                bgcolor: '#f8f9fa',
+                                            },
+                                        }}
+                                    >
+                                        <Box sx={{ 
+                                            width: 32, 
+                                            height: 32, 
+                                            borderRadius: '8px', 
+                                            bgcolor: '#f1f5f9', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center' 
+                                        }}>
+                                            <User size={16} color="#64748b" />
+                                        </Box>
+                                        <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#1e293b' }}>Profile</Typography>
                                     </MenuItem>
 
                                     <MenuItem
                                         onClick={() => handleProfileMenuItemClick('Settings')}
+                                        sx={{
+                                            py: 1.5,
+                                            px: 2,
+                                            gap: 1.5,
+                                            borderRadius: '8px',
+                                            mx: 1,
+                                            my: 0.5,
+                                            '&:hover': {
+                                                bgcolor: '#f8f9fa',
+                                            },
+                                        }}
                                     >
-                                        <Settings size={18} style={{ marginRight: 12 }} />
-                                        Settings
+                                        <Box sx={{ 
+                                            width: 32, 
+                                            height: 32, 
+                                            borderRadius: '8px', 
+                                            bgcolor: '#f1f5f9', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center' 
+                                        }}>
+                                            <Settings size={16} color="#64748b" />
+                                        </Box>
+                                        <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#1e293b' }}>Settings</Typography>
                                     </MenuItem>
 
-                                    <MenuItem onClick={() => handleProfileMenuItemClick('Help')}>
-                                        <HelpCircle size={18} style={{ marginRight: 12 }} />
-                                        Help
+                                    <MenuItem 
+                                        onClick={() => handleProfileMenuItemClick('Help')}
+                                        sx={{
+                                            py: 1.5,
+                                            px: 2,
+                                            gap: 1.5,
+                                            borderRadius: '8px',
+                                            mx: 1,
+                                            my: 0.5,
+                                            '&:hover': {
+                                                bgcolor: '#f8f9fa',
+                                            },
+                                        }}
+                                    >
+                                        <Box sx={{ 
+                                            width: 32, 
+                                            height: 32, 
+                                            borderRadius: '8px', 
+                                            bgcolor: '#f1f5f9', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center' 
+                                        }}>
+                                            <HelpCircle size={16} color="#64748b" />
+                                        </Box>
+                                        <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#1e293b' }}>Help</Typography>
+                                    </MenuItem>
+
+                                    <MenuItem 
+                                        onClick={() => handleProfileMenuItemClick('Logout')}
+                                        sx={{
+                                            py: 1.5,
+                                            px: 2,
+                                            gap: 1.5,
+                                            borderRadius: '8px',
+                                            mx: 1,
+                                            my: 0.5,
+                                            mt: 1,
+                                            borderTop: '1px solid #e9ecef',
+                                            pt: 2,
+                                            '&:hover': {
+                                                bgcolor: '#fee2e2',
+                                            },
+                                        }}
+                                    >
+                                        <Box sx={{ 
+                                            width: 32, 
+                                            height: 32, 
+                                            borderRadius: '8px', 
+                                            bgcolor: '#fee2e2', 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center' 
+                                        }}>
+                                            <LogOut size={16} color="#dc2626" />
+                                        </Box>
+                                        <Typography sx={{ fontSize: '14px', fontWeight: 500, color: '#dc2626' }}>Logout</Typography>
                                     </MenuItem>
                                 </Menu>
                             </Box>
@@ -478,6 +748,85 @@ const DashboardLayout = () => {
 
             {/* SEARCH OVERLAY */}
             <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+
+            {/* LOGOUT CONFIRMATION DIALOG */}
+            <Dialog
+                open={logoutDialogOpen}
+                onClose={handleLogoutCancel}
+                PaperProps={{
+                    sx: {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        borderRadius: '16px',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
+                        minWidth: { xs: '90%', sm: '400px' },
+                        p: 1,
+                    },
+                }}
+            >
+                <DialogTitle
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        pb: 1,
+                    }}
+                >
+                    <Typography sx={{ fontSize: '20px', fontWeight: 600, color: '#1e293b' }}>
+                        Confirm Logout
+                    </Typography>
+                </DialogTitle>
+
+                <DialogContent sx={{ pt: 2, pb: 1 }}>
+                    <Typography sx={{ fontSize: '15px', color: '#64748b', lineHeight: 1.6 }}>
+                        Are you sure you want to logout?
+                    </Typography>
+                </DialogContent>
+
+                <DialogActions sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                    <Button
+                        onClick={handleLogoutCancel}
+                        sx={{
+                            px: 3,
+                            py: 1,
+                            borderRadius: '8px',
+                            textTransform: 'none',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            color: '#64748b',
+                            border: '1px solid #e9ecef',
+                            '&:hover': {
+                                bgcolor: '#f8f9fa',
+                                border: '1px solid #cbd5e1',
+                            },
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={handleLogoutConfirm}
+                        endIcon={<LogOut size={16} color="#fff" />}
+                        variant="contained"
+                        sx={{
+                            px: 3,
+                            py: 1,
+                            borderRadius: '8px',
+                            textTransform: 'none',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            bgcolor: '#dc2626',
+                            boxShadow: 'none',
+                            '&:hover': {
+                                bgcolor: '#b91c1c',
+                                boxShadow: '0 4px 12px rgba(220,38,38,0.3)',
+                            },
+                        }}
+                    >
+                        Logout
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 };
