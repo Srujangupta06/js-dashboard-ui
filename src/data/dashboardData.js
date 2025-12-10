@@ -22,7 +22,7 @@ export const stats = [
         color: '#0891b2',
         bgLight: '#cffafe',
     },
-    
+
     {
         title: 'Applied Jobs',
         value: '45',
@@ -64,9 +64,9 @@ export const stats = [
         value: '3',
         change: '+50%',
         icon: Award,
-        gradient: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-        color: '#ea580c',
-        bgLight: '#ffedd5',
+        gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+        color: '#f59e0b',
+        bgLight: '#fef3c7',
     },
     // {
     //     title: 'Job Offers',

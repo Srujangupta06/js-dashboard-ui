@@ -82,7 +82,7 @@ const DashboardLayout = () => {
                 <AppBar
                     position="fixed"
                     sx={{
-                        background: '#ffffff',
+                        backgroundColor: '#ffffff',
                         boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                         borderBottom: '1px solid #e9ecef',
                     }}
@@ -223,7 +223,7 @@ const DashboardLayout = () => {
                 sx={{
                     flexGrow: 1,
                     width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` },
-                    background: '#f8f9fa',
+                    background: '#fafcffff',
                     overflow: 'hidden',
                 }}
             >
@@ -339,7 +339,7 @@ const DashboardLayout = () => {
                 {/* PAGE CONTENT - This is where routed pages will render */}
                 <Box
                     sx={{
-                        p: { xs: 2.5, md: 3, lg: 4 },
+                        p: { xs: 1.5, md: 2, lg: 3 },
                         mt: { xs: 8, md: 0 },
                         pb: { xs: 10, md: 4 },
                     }}
