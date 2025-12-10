@@ -38,7 +38,10 @@ const Dashboard = () => {
                 </Typography>
 
             {/*  Stats */}
-            <Grid container spacing={3} mb={3} mt={2}>
+            <Grid container spacing={3} mb={3} mt={2} sx={{
+                alignItems:{xs:'center',sm:'center',md:'center',lg:'center',xl:'center'},
+                justifyContent:{xs:'center',sm:'center',md:'center',lg:'center',xl:'center'},
+            }}>
                 {stats.map((stat, index) => {
                     const IconComponent = stat.icon;
                     return (
@@ -119,7 +122,9 @@ const Dashboard = () => {
                 </Box>
 
                 {/* Applied Jobs Section */}
-                <Box>
+                <Box sx={{
+                    flex:1
+                }}>
                     <AppliedJobs />
                 </Box>
             </Box>

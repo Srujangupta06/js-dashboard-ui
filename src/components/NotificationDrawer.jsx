@@ -78,8 +78,8 @@ const NotificationDrawer = ({ open, onClose }) => {
                 '& .MuiDrawer-paper': {
                     width: { xs: '100%', sm: 400 },
                     background: '#f8f9fa',
-                    borderTopLeftRadius:'24px',
-                    borderBottomLeftRadius:'24px',
+                    borderTopLeftRadius:{xs:'0px',sm:'20px',md:'24px'},
+                    borderBottomLeftRadius:{xs:'0px',sm:'20px',md:'24px'},
                 },
             }}
         >

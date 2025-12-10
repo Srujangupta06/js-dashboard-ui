@@ -71,28 +71,24 @@ const Sidebar = ({ selectedMenu, setSelectedMenu, isExpanded }) => {
             <Box
                 sx={{
                     py: '8px',
-                    px: '20px',
+                    px: '12px',
                     borderBottom: '1px solid #e9ecef',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 2,
                 }}
             >
-                <Box component={'img'} src={logo} sx={{ width: '100%', height: '100%', maxWidth: '160px', maxHeight: '100px', objectFit: 'contain', mb: '10px' }} />
+                <Box component={'img'} src={logo} sx={{ width: '100%', height: '100%', maxWidth: {md:'120px',lg:'140px',xl:'160px'}, maxHeight: '100px', objectFit: 'contain', mb: '10px' }} />
             </Box>
 
             {/* Navigation Menu */}
-            <List sx={{ flex: 1, px: 1, py: 1.5 }}>
+            <List sx={{ flex: 1, px: 1, py: 1 }}>
                 {menuItems.map((item) => (
-                    <ListItem key={item.text} disablePadding sx={{ mb: 0.75 }}>
+                    <ListItem key={item.text} disablePadding >
                         <Tooltip title="" placement="right">
                             <ListItemButton
                                 selected={location.pathname === item.path}
                                 onClick={() => handleMenuClick(item)}
                                 sx={{
                                     borderRadius: '8px',
-                                    py: 1.5,
+                                    py: 1,
                                     px: 1,
                                     position: 'relative',
                                     transition: 'all 0.2s ease',

@@ -241,7 +241,7 @@ const RecommendedJobs = () => {
                         fontWeight: 600,
                         cursor: 'pointer',
                         py: '4px',
-                        px: 1.5,
+                        px: '12px',
                         borderRadius: '6px',
                         transition: 'all 0.2s ease',
                         '&:hover': {

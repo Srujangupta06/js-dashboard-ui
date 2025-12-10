@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 const matchData = [
@@ -36,6 +36,9 @@ const CustomTooltip = ({ active, payload }) => {
 
 const HowYouMatch = () => {
     const [activeIndex, setActiveIndex] = useState(null);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
 
     const onPieEnter = (_, index) => {
         setActiveIndex(index);
@@ -52,7 +55,7 @@ const HowYouMatch = () => {
                 borderRadius: '8px',
                 border: '1px solid #e9ecef',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)',
-                p: 3,
+                p: '12px',
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
@@ -83,15 +86,15 @@ const HowYouMatch = () => {
             {/* Chart Container */}
             <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 {/* Donut Chart */}
-                <Box sx={{ width: '100%', height: 240, position: 'relative', mb: 3 }}>
+                <Box sx={{ width: '100%', height: { xs: 180, md: 240 }, position: 'relative', mb: 3 }}>
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
                                 data={matchData}
                                 cx="50%"
                                 cy="50%"
-                                innerRadius={70}
-                                outerRadius={100}
+                                innerRadius={isMobile ? 50 : 70}
+                                outerRadius={isMobile ? 70 : 100}
                                 paddingAngle={3}
                                 dataKey="value"
                                 onMouseEnter={onPieEnter}
@@ -127,7 +130,7 @@ const HowYouMatch = () => {
                     >
                         <Typography
                             sx={{
-                                fontSize: '32px',
+                                fontSize: { xs: '24px', md: '32px' },
                                 fontWeight: 700,
                                 color: '#1e293b',
                                 lineHeight: 1,
@@ -156,6 +159,7 @@ const HowYouMatch = () => {
                             sx={{
                                 display: 'flex',
                                 alignItems: 'center',
+                                flexWrap: 'wrap',
                                 gap: 1.5,
                                 p: 1.5,
                                 borderRadius: '8px',
@@ -175,8 +179,8 @@ const HowYouMatch = () => {
                             {/* Color Indicator */}
                             <Box
                                 sx={{
-                                    width: 12,
-                                    height: 12,
+                                    width: {xs:8,md:12},
+                                    height: {xs:8,md:12},
                                     background: item.color,
                                     borderRadius: '50%',
                                     flexShrink: 0,
@@ -187,8 +191,9 @@ const HowYouMatch = () => {
                             {/* Title & Value */}
                             <Box sx={{ flex: 1, minWidth: 0 }}>
                                 <Typography
+                                title={item.name}
                                     sx={{
-                                        fontSize: '12px',
+                                        fontSize: {xs:'10px',md:'12px'},
                                         color: '#64748b',
                                         fontWeight: 500,
                                         lineHeight: 1.2,
@@ -202,7 +207,7 @@ const HowYouMatch = () => {
                                 </Typography>
                                 <Typography
                                     sx={{
-                                        fontSize: '16px',
+                                        fontSize: {xs:'12px',md:'16px'},
                                         color: item.color,
                                         fontWeight: 700,
                                         lineHeight: 1,

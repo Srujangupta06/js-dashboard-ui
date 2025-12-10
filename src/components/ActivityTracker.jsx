@@ -92,7 +92,7 @@ const ActivityTracker = () => {
                 borderRadius: '8px',
                 border: '1px solid #e9ecef',
                 boxShadow: '0 4px 12px rgba(0, 0, 0, 0.06)',
-                p: 3,
+                p: '12px',
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
@@ -210,36 +210,38 @@ const ActivityTracker = () => {
             <Box sx={{ width: '100%', height: { xs: '220px', sm: '280px' } }}>
                 <ResponsiveContainer width="100%" height="100%">
                     {timeRange === 'daily' ? (
-                        <BarChart data={getData()} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                        <BarChart data={getData()} margin={{ top: 10, right: 5, left: 0, bottom: 0 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                             <XAxis
                                 dataKey="name"
-                                tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                tick={{ fill: '#94a3b8', fontSize: 10 }}
                                 axisLine={{ stroke: '#e9ecef' }}
                             />
                             <YAxis
-                                tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                tick={{ fill: '#94a3b8', fontSize: 10 }}
                                 axisLine={{ stroke: '#e9ecef' }}
+                                width={35}
                             />
                             <Tooltip content={<CustomTooltip />} cursor={{ fill: '#f8f9fa' }} />
                             <Bar
                                 dataKey="applications"
                                 fill="#ce4a03ff" // mui primary bleu color
                                 radius={[8, 8, 0, 0]}
-                                maxBarSize={40}
+                                maxBarSize={30}
                             />
                         </BarChart>
                     ) : (
-                        <LineChart data={getData()} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                        <LineChart data={getData()} margin={{ top: 10, right: 5, left: 0, bottom: 0 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                             <XAxis
                                 dataKey="name"
-                                tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                tick={{ fill: '#94a3b8', fontSize: 10 }}
                                 axisLine={{ stroke: '#e9ecef' }}
                             />
                             <YAxis
-                                tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                tick={{ fill: '#94a3b8', fontSize: 10 }}
                                 axisLine={{ stroke: '#e9ecef' }}
+                                width={35}
                             />
                             <Tooltip content={<CustomTooltip />} />
                             <Line

@@ -13,7 +13,7 @@ const StatCard = ({ stat, IconComponent }) => {
                 boxShadow: '0 2px 12px rgba(0, 0, 0, 0.06)',
                 border: `1px solid ${stat.color}30`,
                 height: '100%',
-                width: { xs: '100%', sm: '30%', md: '30%', lg: '18%', xl: '15%' },
+                width: { xs: '90%', sm: '30%', md: '30%', lg: '18%', xl: '15%' },
                 '&:hover': {
                     cursor:'pointer',
                     transform: 'translateY(-4px)',

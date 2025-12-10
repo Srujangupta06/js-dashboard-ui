@@ -96,6 +96,7 @@ const DashboardLayout = () => {
                     position="fixed"
                     sx={{
                         backgroundColor: '#ffffff',
+                        py:0.5,
                         boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                         borderBottom: '1px solid #e9ecef',
                     }}
@@ -113,7 +114,7 @@ const DashboardLayout = () => {
                             sx={{ maxWidth: '120px', maxHeight: '100px' }}
                         />
 
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center',gap:1 }}>
                             <IconButton
                                 sx={{
                                     color: '#6c757d',
@@ -145,13 +146,14 @@ const DashboardLayout = () => {
                             <IconButton onClick={handleMoreMenuOpen}>
                                 <Avatar
                                     sx={{
+                                        p:0.4,
                                         width: 32,
                                         height: 32,
                                         background:
-                                            'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                                            'linear-gradient(135deg, #ea590c 0%, #ea590c 100%)',
                                     }}
                                 >
-                                    JD
+                                    <span style={{ fontSize: '14px', fontWeight: 'bold' }}>JD</span>
                                 </Avatar>
                             </IconButton>
 
@@ -236,7 +238,7 @@ const DashboardLayout = () => {
                 sx={{
                     flexGrow: 1,
                     width: { xs: '100%', md: `calc(100% - ${DRAWER_WIDTH}px)` },
-                    background: '#fafcffff',
+                    background: '#f3f8ffff',
                     overflow: 'hidden',
                 }}
             >
@@ -263,7 +265,7 @@ const DashboardLayout = () => {
                             {/* BREADCRUMBS - LEFT SIDE */}
                             <Box>
                                 <Breadcrumbs
-                                    separator={<ChevronRight size={16} color="#94a3b8" />}
+                                    separator={'/'}
                                     sx={{
                                         '& .MuiBreadcrumbs-separator': {
                                             mx: 0.5,
@@ -286,7 +288,7 @@ const DashboardLayout = () => {
                                     </Link>
                                     <Typography
                                         sx={{
-                                            fontSize: '14px',
+                                            fontSize: '20px',
                                             color: '#1e293b',
                                             fontWeight: 600,
                                         }}
@@ -297,7 +299,7 @@ const DashboardLayout = () => {
                             </Box>
 
                             {/* SEARCH BAR & ACTIONS - RIGHT SIDE */}
-                            <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#ffffffff', minWidth: '400px', borderRadius: '50px', p: 0.5, border: '1px solid #e9ecef', justifyContent: 'space-between', position: 'relative' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#ffffffff', minWidth: '400px', borderRadius: '50px', p: 0.5, border: '1px solid #e9ecef', justifyContent: 'space-between', position: 'relative',boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
                                 {/* SEARCH BAR */}
                                 <Box
                                     sx={{
