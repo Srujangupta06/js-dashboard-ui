@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import {
     Box,
     IconButton,
@@ -13,6 +13,9 @@ import {
     MenuItem,
     Avatar,
     InputBase,
+    Typography,
+    Breadcrumbs,
+    Link,
 } from '@mui/material';
 
 import {
@@ -21,7 +24,8 @@ import {
     Settings,
     HelpCircle,
     X,
-    User
+    User,
+    ChevronRight,
 } from 'lucide-react';
 
 // Components
@@ -37,6 +41,7 @@ const DRAWER_WIDTH = 260;
 const DashboardLayout = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const location = useLocation();
 
     const [notifications] = useState(3);
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -48,6 +53,14 @@ const DashboardLayout = () => {
     const [notificationDrawerOpen, setNotificationDrawerOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [desktopSearchExpanded, setDesktopSearchExpanded] = useState(false);
+
+    // Get current page name from route
+    const getCurrentPageName = () => {
+        const path = location.pathname.split('/').filter(Boolean);
+        if (path.length === 0) return 'Dashboard';
+        const pageName = path[path.length - 1];
+        return pageName.charAt(0).toUpperCase() + pageName.slice(1);
+    };
 
     const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
     const handleMoreMenuOpen = (e) => setMoreMenuAnchor(e.currentTarget);
@@ -231,107 +244,208 @@ const DashboardLayout = () => {
                 {!isMobile && (
                     <Box
                         sx={{
-                            background: '#ffffff',
-                            borderBottom: '1px solid #e9ecef',
+                            background: 'transparent',
                             position: 'sticky',
                             top: 0,
                             zIndex: 1100,
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                            pt: 2
                         }}
                     >
                         <Box
                             sx={{
                                 display: 'flex',
-                                justifyContent: 'flex-end',
+                                justifyContent: 'space-between',
                                 alignItems: 'center',
                                 px: 4,
                                 py: 1,
                             }}
                         >
-                            {/* SEARCH */}
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    background: desktopSearchExpanded ? '#f8f9fa' : 'transparent',
-                                    borderRadius: '24px',
-                                    width: desktopSearchExpanded ? '300px' : '44px',
-                                    height: '44px',
-                                    border: desktopSearchExpanded
-                                        ? '1px solid #e9ecef'
-                                        : 'none',
-                                    transition: '0.3s',
-                                    overflow: 'hidden',
-                                }}
-                            >
-                                <IconButton
-                                    onClick={() =>
-                                        setDesktopSearchExpanded(!desktopSearchExpanded)
-                                    }
-                                >
-                                    <Search size={20} />
-                                </IconButton>
-
-                                {desktopSearchExpanded && (
-                                    <>
-                                        <InputBase
-                                            placeholder="Search..."
-                                            sx={{ ml: 1, flex: 1 }}
-                                            autoFocus
-                                        />
-                                        <IconButton
-                                            onClick={() => setDesktopSearchExpanded(false)}
-                                        >
-                                            <X size={16} />
-                                        </IconButton>
-                                    </>
-                                )}
-                            </Box>
-
-                            {/* NOTIFICATIONS */}
-                            <IconButton onClick={handleNotificationOpen}>
-                                <Badge badgeContent={notifications} color="error">
-                                    <Bell size={20} />
-                                </Badge>
-                            </IconButton>
-
-                            {/* PROFILE */}
-                            <IconButton onClick={handleProfileMenuOpen}>
-                                <Avatar
+                            {/* BREADCRUMBS - LEFT SIDE */}
+                            <Box>
+                                <Breadcrumbs
+                                    separator={<ChevronRight size={16} color="#94a3b8" />}
                                     sx={{
-                                        width: 36,
-                                        height: 36,
-                                        background:
-                                            'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                                        '& .MuiBreadcrumbs-separator': {
+                                            mx: 0.5,
+                                        },
                                     }}
                                 >
-                                    JD
-                                </Avatar>
-                            </IconButton>
+                                    <Link
+                                        underline="none"
+                                        sx={{
+                                            fontSize: '14px',
+                                            color: '#94a3b8',
+                                            fontWeight: 400,
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                color: '#ea590c',
+                                            },
+                                        }}
+                                    >
+                                        Pages
+                                    </Link>
+                                    <Typography
+                                        sx={{
+                                            fontSize: '14px',
+                                            color: '#1e293b',
+                                            fontWeight: 600,
+                                        }}
+                                    >
+                                        {getCurrentPageName()}
+                                    </Typography>
+                                </Breadcrumbs>
+                            </Box>
 
-                            {/* PROFILE MENU */}
-                            <Menu
-                                anchorEl={profileMenuAnchor}
-                                open={Boolean(profileMenuAnchor)}
-                                onClose={handleProfileMenuClose}
-                            >
-                                <MenuItem onClick={() => handleProfileMenuItemClick('Profile')}>
-                                    <User size={18} style={{ marginRight: 12 }} />
-                                    Profile
-                                </MenuItem>
-
-                                <MenuItem
-                                    onClick={() => handleProfileMenuItemClick('Settings')}
+                            {/* SEARCH BAR & ACTIONS - RIGHT SIDE */}
+                            <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#ffffffff', minWidth: '400px', borderRadius: '50px', p: 0.5, border: '1px solid #e9ecef', justifyContent: 'space-between', position: 'relative' }}>
+                                {/* SEARCH BAR */}
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        flex: 1,
+                                        px: 1,
+                                    }}
                                 >
-                                    <Settings size={18} style={{ marginRight: 12 }} />
-                                    Settings
-                                </MenuItem>
+                                    <Search size={20} color="#94a3b8" style={{ marginLeft: '8px' }} />
+                                    <InputBase
+                                        placeholder="Search jobs, companies..."
+                                        sx={{
+                                            ml: 1.5,
+                                            flex: 1,
+                                            fontSize: '14px',
+                                            color: '#1e293b',
+                                            '& ::placeholder': {
+                                                color: '#94a3b8',
+                                                opacity: 1,
+                                            },
+                                        }}
+                                        onFocus={() => setDesktopSearchExpanded(true)}
+                                        onBlur={() => setTimeout(() => setDesktopSearchExpanded(false), 200)}
+                                    />
+                                </Box>
 
-                                <MenuItem onClick={() => handleProfileMenuItemClick('Help')}>
-                                    <HelpCircle size={18} style={{ marginRight: 12 }} />
-                                    Help
-                                </MenuItem>
-                            </Menu>
+                                {/* SEARCH HISTORY OVERLAY */}
+                                {desktopSearchExpanded && (
+                                    <Box
+                                        sx={{
+                                            position: 'absolute',
+                                            top: '100%',
+                                            left: 0,
+                                            right: 0,
+                                            mt: 1,
+                                            bgcolor: '#ffffff',
+                                            borderRadius: '12px',
+                                            border: '1px solid #e9ecef',
+                                            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                                            zIndex: 1200,
+                                            overflow: 'hidden',
+                                        }}
+                                    >
+                                        <Box sx={{ p: 2 }}>
+                                            <Typography
+                                                sx={{
+                                                    fontSize: '12px',
+                                                    fontWeight: 600,
+                                                    color: '#64748b',
+                                                    textTransform: 'uppercase',
+                                                    mb: 1.5,
+                                                }}
+                                            >
+                                                Recent Searches
+                                            </Typography>
+
+                                            {/* Search History Items */}
+                                            {['Frontend Developer', 'Product Manager', 'UI/UX Designer', 'Data Analyst'].map((item, index) => (
+                                                <Box
+                                                    key={index}
+                                                    sx={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: 1.5,
+                                                        py: 1.5,
+                                                        px: 1.5,
+                                                        borderRadius: '8px',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s',
+                                                        '&:hover': {
+                                                            bgcolor: '#f8f9fa',
+                                                        },
+                                                    }}
+                                                >
+                                                    <Box
+                                                        sx={{
+                                                            width: 32,
+                                                            height: 32,
+                                                            borderRadius: '50%',
+                                                            bgcolor: '#f1f5f9',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                        }}
+                                                    >
+                                                        <Search size={16} color="#64748b" />
+                                                    </Box>
+                                                    <Typography
+                                                        sx={{
+                                                            fontSize: '14px',
+                                                            color: '#1e293b',
+                                                            fontWeight: 500,
+                                                        }}
+                                                    >
+                                                        {item}
+                                                    </Typography>
+                                                </Box>
+                                            ))}
+                                        </Box>
+                                    </Box>
+                                )}
+
+                                {/* NOTIFICATIONS */}
+                                <IconButton onClick={handleNotificationOpen} sx={{ ml: 1 }}>
+                                    <Badge badgeContent={notifications} color="error">
+                                        <Bell size={20} />
+                                    </Badge>
+                                </IconButton>
+
+                                {/* PROFILE */}
+                                <IconButton onClick={handleProfileMenuOpen} sx={{ ml: 1.5 }}>
+                                    <Avatar
+                                        sx={{
+                                            width: 36,
+                                            height: 36,
+                                            background:
+                                                'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                                        }}
+                                    >
+                                        JD
+                                    </Avatar>
+                                </IconButton>
+
+                                {/* PROFILE MENU */}
+                                <Menu
+                                    anchorEl={profileMenuAnchor}
+                                    open={Boolean(profileMenuAnchor)}
+                                    onClose={handleProfileMenuClose}
+                                >
+                                    <MenuItem onClick={() => handleProfileMenuItemClick('Profile')}>
+                                        <User size={18} style={{ marginRight: 12 }} />
+                                        Profile
+                                    </MenuItem>
+
+                                    <MenuItem
+                                        onClick={() => handleProfileMenuItemClick('Settings')}
+                                    >
+                                        <Settings size={18} style={{ marginRight: 12 }} />
+                                        Settings
+                                    </MenuItem>
+
+                                    <MenuItem onClick={() => handleProfileMenuItemClick('Help')}>
+                                        <HelpCircle size={18} style={{ marginRight: 12 }} />
+                                        Help
+                                    </MenuItem>
+                                </Menu>
+                            </Box>
                         </Box>
                     </Box>
                 )}
