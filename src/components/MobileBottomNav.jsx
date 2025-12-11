@@ -6,8 +6,8 @@ import {
     HomeOutlined,
     Search,
     SearchOutlined,
-    Send,
-    SendOutlined,
+    Work,
+    WorkOutline,
     MoreHoriz,
     Close,
     Description,
@@ -16,7 +16,7 @@ import {
     HelpOutline,
     Message,
 } from '@mui/icons-material';
-import { Bookmark, Star, Users, Building, FolderOpen, Settings, HelpCircle, MessageSquare } from 'lucide-react';
+import { Star, Users, Building, FolderOpen, Settings, HelpCircle, MessageSquare } from 'lucide-react';
 
 const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
     const navigate = useNavigate();
@@ -28,8 +28,7 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
     const routeMap = {
         'Dashboard': '/dashboard',
         'Jobs': '/job-search',
-        'Saved': '/saved',
-        'Applied': '/applied',
+        'Jobs Board': '/jobs-board',
         'Resumes': '/resumes',
         'Shortlisted': '/shortlisted',
         'Network': '/network',
@@ -44,7 +43,7 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
         { text: 'Dashboard', iconOutlined: HomeOutlined, iconFilled: Home },
         { text: 'Jobs', iconOutlined: SearchOutlined, iconFilled: Search },
         { text: 'Resumes', iconOutlined: DescriptionOutlined, iconFilled: Description },
-        { text: 'Applied', iconOutlined: SendOutlined, iconFilled: Send },
+        { text: 'Jobs Board', iconOutlined: WorkOutline, iconFilled: Work },
         { text: 'More', isMore: true },
     ];
 
@@ -53,7 +52,6 @@ const MobileBottomNav = ({ selectedMenu, setSelectedMenu }) => {
         {
             title: 'Job Management',
             items: [
-                { text: 'Saved', icon: Bookmark, color: '#ea590c' },
                 { text: 'Shortlisted', icon: Star, color: '#FF9800' },
             ],
         },

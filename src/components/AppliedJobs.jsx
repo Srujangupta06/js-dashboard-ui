@@ -195,14 +195,14 @@ const AppliedJobs = () => {
                     sx={{
                         overflowX: 'auto',
                         '&::-webkit-scrollbar': {
-                            height: '6px',
+                            height: '8px',
                         },
                         '&::-webkit-scrollbar-track': {
                             background: '#f1f5f9',
                         },
                         '&::-webkit-scrollbar-thumb': {
                             background: '#cbd5e1',
-                            borderRadius: '3px',
+                            borderRadius: '4px',
                         },
                         '&::-webkit-scrollbar-thumb:hover': {
                             background: '#94a3b8',

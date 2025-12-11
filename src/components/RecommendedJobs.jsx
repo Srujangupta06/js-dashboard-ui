@@ -260,14 +260,14 @@ const RecommendedJobs = () => {
                     flex: 1,
                     overflowY: 'auto',
                     '&::-webkit-scrollbar': {
-                        width: '4px',
+                        width: '6px',
                     },
                     '&::-webkit-scrollbar-track': {
-                        background: 'transparent',
+                        background: '#f1f5f9',
                     },
                     '&::-webkit-scrollbar-thumb': {
                         background: '#cbd5e1',
-                        borderRadius: '10px',
+                        borderRadius: '4px',
                         '&:hover': {
                             background: '#94a3b8',
                         },

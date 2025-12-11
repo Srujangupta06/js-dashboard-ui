@@ -1,5 +1,5 @@
 import { Typography, Grid, Box, Button } from '@mui/material';
-import { Map, Calendar } from 'lucide-react';
+import { Map, Calendar, Briefcase, Sparkles } from 'lucide-react';
 import { stats } from '../data/dashboardData';
 import StatCard from '../components/StatCard';
 import RecommendedJobs from '../components/RecommendedJobs';
@@ -11,6 +11,77 @@ import ActivityTracker from '../components/ActivityTracker';
 const Dashboard = () => {
     return (
         <>
+            {/* Portfolio Coming Soon Banner */}
+            {/* <Box
+                sx={{
+                    mb: 3,
+                    px: { xs: 2, md: 3 },
+                    py: 0,
+                    background: 'linear-gradient(90deg, #fb923c 0%, #f97316 50%, #ea580c 100%)',
+                    borderRadius: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 2,
+                    flexWrap: 'wrap',
+                }}
+            >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flex: 1, minWidth: 0 }}>
+                    <Box
+                        sx={{
+                            width: 24,
+                            height: 10,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                        }}
+                    >
+                        <Sparkles size={20} color="#ffffff" strokeWidth={2.5} />
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                        <Typography
+                            sx={{
+                                fontSize: { xs: '13px', md: '14px' },
+                                fontWeight: 600,
+                                color: '#ffffff',
+                                whiteSpace: 'nowrap',
+                            }}
+                        >
+                            New
+                        </Typography>
+                        <Typography
+                            sx={{
+                                fontSize: { xs: '13px', md: '14px' },
+                                fontWeight: 500,
+                                color: '#ffffff',
+                            }}
+                        >
+                            AI Portfolio Builder is coming soon!
+                        </Typography>
+                    </Box>
+                </Box>
+                <Button
+                    endIcon={<Box component="span" sx={{ fontSize: '16px' }}>→</Box>}
+                    sx={{
+                        px: 2,
+                        py: 0.5,
+                        background: '#ffffff',
+                        color: '#ea580c',
+                        fontSize: '13px',
+                        fontWeight: 600,
+                        textTransform: 'none',
+                        borderRadius: '6px',
+                        flexShrink: 0,
+                        '&:hover': {
+                            background: '#fef3c7',
+                        },
+                    }}
+                >
+                    Learn More
+                </Button>
+            </Box> */}
+
             <Typography
                 sx={{
                     fontWeight: 400,
@@ -40,7 +111,7 @@ const Dashboard = () => {
             {/*  Stats */}
             <Grid container spacing={3} mb={3} mt={2} sx={{
                 alignItems:{xs:'center',sm:'center',md:'center',lg:'center',xl:'center'},
-                justifyContent:{xs:'center',sm:'center',md:'center',lg:'center',xl:'center'},
+                justifyContent:{xs:'center',sm:'center',md:'flex-start'},
             }}>
                 {stats.map((stat, index) => {
                     const IconComponent = stat.icon;

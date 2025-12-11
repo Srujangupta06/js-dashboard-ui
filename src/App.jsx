@@ -45,7 +45,7 @@ const App = () => {
           <Route path="resumes" element={<Resumes />} />
           <Route path="network" element={<Network />} />
           <Route path="saved" element={<Saved />} />
-          <Route path="applied" element={<Applied />} />
+          <Route path="jobs-board" element={<Applied />} />
           <Route path="shortlisted" element={<Shortlisted />} />
           <Route path="companies" element={<Companies />} />
           <Route path="file-manager" element={<FileManager />} />
