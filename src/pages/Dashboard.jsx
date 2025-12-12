@@ -82,7 +82,7 @@ const Dashboard = () => {
                 </Button>
             </Box> */}
 
-            <Typography
+            {/* <Typography
                 sx={{
                     fontWeight: 400,
                     color: '#1a1a2e',
@@ -95,7 +95,7 @@ const Dashboard = () => {
 
             <Typography variant='body1' sx={{ color: '#6c757d', fontWeight: 500, mb: 4 }}>
                 Here's what's happening with your job search today.
-            </Typography>
+            </Typography> */}
 
            
                 <Typography

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, Typography, IconButton, Chip, Tooltip, Button } from '@mui/material';
 import { Eye, BookmarkX, Building2, MapPin, Clock, DollarSign, Briefcase } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
 
 // Sample saved jobs data
 const sampleSavedJobs = [
@@ -46,6 +47,10 @@ const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
+};
+
+const calculateDaysSaved = (savedDate) => {
+    return formatDistanceToNow(new Date(savedDate), { addSuffix: true });
 };
 
 const SavedJobsTable = ({ jobs = sampleSavedJobs }) => {
@@ -336,7 +341,7 @@ const SavedJobsTable = ({ jobs = sampleSavedJobs }) => {
                         }}
                     >
                         {/* Card Header */}
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flex: 1, minWidth: 0 }}>
                                 <Box sx={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
                                     <Box component="img" src={job.companyLogo} alt={job.companyName} sx={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'cover', border: '1px solid #e9ecef', background: '#ffffff', padding: '4px' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
@@ -348,6 +353,24 @@ const SavedJobsTable = ({ jobs = sampleSavedJobs }) => {
                                     {job.companyName}
                                 </Typography>
                             </Box>
+                            {/* Saved Duration Badge */}
+                            <Chip
+                                icon={<Clock size={12} />}
+                                label={calculateDaysSaved(job.savedDate)}
+                                size="small"
+                                sx={{
+                                    backgroundColor: '#f0f9ff',
+                                    color: '#0284c7',
+                                    fontWeight: 600,
+                                    fontSize: '10px',
+                                    height: '22px',
+                                    borderRadius: '6px',
+                                    '& .MuiChip-icon': {
+                                        color: '#0284c7',
+                                        marginLeft: '4px',
+                                    },
+                                }}
+                            />
                         </Box>
 
                         {/* Job Title */}
@@ -362,8 +385,7 @@ const SavedJobsTable = ({ jobs = sampleSavedJobs }) => {
                                 <Typography sx={{ fontSize: '12px', fontWeight: 500 }}>{job.location}</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, color: '#10b981' }}>
-                                <DollarSign size={14} style={{ flexShrink: 0 }} />
-                                <Typography sx={{ fontSize: '12px', fontWeight: 600 }}>{job.salary}</Typography>
+                                <Typography sx={{ fontSize: '16px', fontWeight: 600 }}>{job.salary}</Typography>
                             </Box>
                         </Box>
 
@@ -371,6 +393,29 @@ const SavedJobsTable = ({ jobs = sampleSavedJobs }) => {
                         <Box sx={{ display: 'flex', gap: 1, pt: 2, borderTop: '1px solid #f1f5f9' }}>
                             <Button
                                 variant="outlined"
+                                size="small"
+                                startIcon={<BookmarkX size={14} />}
+                                onClick={() => handleUnsaveJob(job.id)}
+                                sx={{
+                                    fontSize: '11px',
+                                    fontWeight: 600,
+                                    textTransform: 'none',
+                                    borderColor: '#fecaca',
+                                    color: '#ef4444',
+                                    background: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
+                                    padding: '4px 10px',
+                                    minWidth: 'auto',
+                                    '&:hover': {
+                                        borderColor: '#ef4444',
+                                        background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                                        color: '#ffffff',
+                                    },
+                                }}
+                            >
+                                Unsave
+                            </Button>
+                            {/* <Button
+                                variant="contained"
                                 startIcon={<Eye size={16} />}
                                 onClick={() => handleViewJob(job.jobUrl)}
                                 sx={{
@@ -378,33 +423,17 @@ const SavedJobsTable = ({ jobs = sampleSavedJobs }) => {
                                     fontSize: '13px',
                                     fontWeight: 600,
                                     textTransform: 'none',
-                                    borderColor: '#e9ecef',
-                                    color: '#64748b',
+                                    background: 'linear-gradient(135deg, #ea590c 0%, #f97316 100%)',
+                                    color: '#ffffff',
+                                    boxShadow: '0 2px 8px rgba(234, 89, 12, 0.25)',
                                     '&:hover': {
-                                        borderColor: '#ea590c',
-                                        background: 'rgba(234, 89, 12, 0.05)',
-                                        color: '#ea590c',
+                                        background: 'linear-gradient(135deg, #dc2626 0%, #ea580c 100%)',
+                                        boxShadow: '0 4px 12px rgba(234, 89, 12, 0.35)',
                                     },
                                 }}
                             >
-                                View
-                            </Button>
-                            <IconButton
-                                onClick={() => handleUnsaveJob(job.id)}
-                                size="small"
-                                sx={{
-                                    background: 'linear-gradient(135deg, #fee2e2 0%, #fecaca 100%)',
-                                    color: '#ef4444',
-                                    border: '1px solid #fecaca',
-                                    '&:hover': {
-                                        background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-                                        color: '#ffffff',
-                                        borderColor: '#ef4444',
-                                    },
-                                }}
-                            >
-                                <BookmarkX size={18} />
-                            </IconButton>
+                                View Application
+                            </Button> */}
                         </Box>
                     </Box>
                 ))}

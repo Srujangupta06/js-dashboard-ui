@@ -217,7 +217,7 @@ const AppliedJobsTable = ({ jobs = sampleAppliedJobs }) => {
                     sx={{
                         overflowX: 'auto',
                         overflowY: 'auto',
-                        maxHeight: '550px',
+                        flexGrow:1,
                         '&::-webkit-scrollbar': {
                             width: '8px',
                             height: '8px',
@@ -428,7 +428,7 @@ const AppliedJobsTable = ({ jobs = sampleAppliedJobs }) => {
                                                             overflow: 'hidden',
                                                             textOverflow: 'ellipsis',
                                                             whiteSpace: 'nowrap',
-                                                            maxWidth: '140px',
+                                                            maxWidth: '90%',
                                                             cursor: 'default',
                                                             transition: 'color 0.2s ease',
                                                         }}
